@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}} — Ultraplan</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --panel: #ffffff; --ink: #1a2233; --muted: #5c6675;
+    --line: #dde1e7; --accent: #2f5fd0; --accent-soft: #e8eefb;
+    --ok: #1d7a3e; --warn: #b26a00; --bad: #b3261e; --crit: #7a1414;
+    --ok-bg: #e5f3ea; --warn-bg: #fdf1dd; --bad-bg: #fbe7e6; --crit-bg: #f3dcdc;
+    --code-bg: #f0f2f5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14171c; --panel: #1d2129; --ink: #e6e9ee; --muted: #9aa3b0;
+      --line: #313743; --accent: #7ea2f0; --accent-soft: #232c40;
+      --ok: #6fce93; --warn: #e6b566; --bad: #ef8f89; --crit: #f0b3b3;
+      --ok-bg: #1c2f23; --warn-bg: #332a1a; --bad-bg: #38201e; --crit-bg: #3d2323;
+      --code-bg: #161a20;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.55 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  header {
+    background: var(--panel); border-bottom: 1px solid var(--line);
+    padding: 22px 28px; position: sticky; top: 0; z-index: 10;
+  }
+  header h1 { margin: 0 0 4px; font-size: 21px; }
+  .status {
+    display: inline-block; margin-top: 6px; padding: 3px 12px; border-radius: 99px;
+    background: var(--warn-bg); color: var(--warn); font-size: 13px; font-weight: 600;
+  }
+  .meta { color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .wrap { display: flex; gap: 26px; max-width: 1200px; margin: 26px auto; padding: 0 24px; align-items: flex-start; }
+  nav {
+    position: sticky; top: 108px; flex: 0 0 220px; font-size: 13.5px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px;
+  }
+  nav a { display: block; color: var(--muted); text-decoration: none; padding: 5px 8px; border-radius: 6px; }
+  nav a.active, nav a:hover { color: var(--accent); background: var(--accent-soft); }
+  nav .tools { margin-top: 10px; border-top: 1px solid var(--line); padding-top: 10px; }
+  nav button {
+    font: inherit; font-size: 12.5px; color: var(--muted); background: none;
+    border: 1px solid var(--line); border-radius: 6px; padding: 3px 9px; margin: 2px 2px 0 0; cursor: pointer;
+  }
+  main { flex: 1; min-width: 0; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 18px; }
+  .tile { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .tile b { display: block; font-size: 24px; }
+  .tile span { color: var(--muted); font-size: 12.5px; }
+  details.panel {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px; margin-bottom: 14px;
+  }
+  details.panel summary {
+    list-style: none; cursor: pointer; padding: 14px 18px; display: flex; gap: 12px; align-items: baseline;
+  }
+  details.panel summary::-webkit-details-marker { display: none; }
+  summary .num {
+    flex: 0 0 auto; background: var(--accent-soft); color: var(--accent);
+    font-weight: 700; font-size: 12.5px; border-radius: 6px; padding: 2px 8px;
+  }
+  summary .t { font-weight: 650; }
+  summary .preview { color: var(--muted); font-size: 13px; flex: 1; text-align: right; }
+  details[open] summary .preview { display: none; }
+  .body { padding: 4px 20px 18px; border-top: 1px solid var(--line); overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 14px; }
+  th, td { border: 1px solid var(--line); padding: 7px 11px; text-align: left; vertical-align: top; }
+  th { background: var(--code-bg); }
+  pre {
+    background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px;
+    padding: 14px; overflow-x: auto; font-size: 13px; line-height: 1.5;
+  }
+  code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
+  .badge { display: inline-block; padding: 1px 9px; border-radius: 99px; font-size: 12px; font-weight: 600; }
+  .badge.low  { background: var(--ok-bg);   color: var(--ok); }
+  .badge.med  { background: var(--warn-bg); color: var(--warn); }
+  .badge.high { background: var(--bad-bg);  color: var(--bad); }
+  .badge.crit { background: var(--crit-bg); color: var(--crit); }
+  .rec { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 10px 0; }
+  ul.checklist { list-style: none; padding-left: 4px; }
+  ul.checklist li::before { content: "☐ "; color: var(--muted); }
+  footer { color: var(--muted); font-size: 12.5px; padding: 8px 4px 40px; border-top: 1px solid var(--line); margin-top: 24px; }
+  @media print {
+    nav, .tools { display: none; }
+    details.panel { border: none; }
+    body { background: #fff; }
+  }
+  @media (max-width: 900px) { .wrap { flex-direction: column; } nav { position: static; width: 100%; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>{{TITLE}}</h1>
+  <!-- hero_status: the PLAN'S own status, never implementation progress.
+       e.g. "Plan only · nothing implemented · awaiting approval on 3 decisions" -->
+  <span class="status">{{HERO_STATUS}}</span>
+  <div class="meta">Ultraplan · {{DATE}} · {{PROJECT}}</div>
+</header>
+
+<div class="wrap">
+<nav id="toc">
+  <a href="#s1">1 · Executive summary</a>
+  <a href="#s2">2 · Approach comparison</a>
+  <a href="#s3">3 · Execution plan (DAG)</a>
+  <a href="#s4">4 · Risk matrix</a>
+  <a href="#s5">5 · Files affected</a>
+  <a href="#s6">6 · Verification checklist</a>
+  <a href="#s7">7 · Open questions</a>
+  <div class="tools">
+    <button onclick="setAll(true)">Expand all</button>
+    <button onclick="setAll(false)">Collapse all</button>
+    <button onclick="window.print()">Print</button>
+  </div>
+</nav>
+
+<main>
+  <!-- Scope tiles: phases, files touched, risks, open decisions. Adjust freely. -->
+  <div class="tiles">
+    <div class="tile"><b>{{N_PHASES}}</b><span>phases</span></div>
+    <div class="tile"><b>{{N_FILES}}</b><span>files affected</span></div>
+    <div class="tile"><b>{{N_RISKS}}</b><span>risks tracked</span></div>
+    <div class="tile"><b>{{N_QUESTIONS}}</b><span>open decisions</span></div>
+  </div>
+
+  <!-- RULE: every summary carries a one-line PREVIEW stating the section's
+       CONCLUSION, not a description of its contents.
+       RULE: only sections 1 and 7 ship open; the rest collapsed. -->
+
+  <details class="panel" id="s1" open>
+    <summary><span class="num">1</span><span class="t">Executive summary</span><span class="preview">{{PREVIEW_1}}</span></summary>
+    <div class="body">
+      <p>{{EXEC_SUMMARY}}</p>
+      <div class="rec"><b>Recommended:</b> {{RECOMMENDED_APPROACH}}</div>
+    </div>
+  </details>
+
+  <details class="panel" id="s2">
+    <summary><span class="num">2</span><span class="t">Approach comparison</span><span class="preview">{{PREVIEW_2}}</span></summary>
+    <div class="body">
+      <table>
+        <tr><th>Criteria</th><th>Approach A</th><th>Approach B</th><th>Approach C</th></tr>
+        <!-- rows: Complexity / Risk / Effort / Reversibility / Test coverage -->
+        {{APPROACH_ROWS}}
+      </table>
+      <p>{{APPROACH_RATIONALE}}</p>
+    </div>
+  </details>
+
+  <details class="panel" id="s3">
+    <summary><span class="num">3</span><span class="t">Execution plan (DAG)</span><span class="preview">{{PREVIEW_3}}</span></summary>
+    <div class="body">
+      <pre>{{DAG}}</pre>
+    </div>
+  </details>
+
+  <details class="panel" id="s4">
+    <summary><span class="num">4</span><span class="t">Risk matrix</span><span class="preview">{{PREVIEW_4}}</span></summary>
+    <div class="body">
+      <table>
+        <tr><th>Risk</th><th>Probability</th><th>Impact</th><th>Mitigation</th></tr>
+        <!-- probability/impact cells use: <span class="badge low|med|high|crit">Low</span> -->
+        {{RISK_ROWS}}
+      </table>
+    </div>
+  </details>
+
+  <details class="panel" id="s5">
+    <summary><span class="num">5</span><span class="t">Files affected</span><span class="preview">{{PREVIEW_5}}</span></summary>
+    <div class="body">
+      <pre>{{FILES_AFFECTED}}</pre>
+    </div>
+  </details>
+
+  <details class="panel" id="s6">
+    <summary><span class="num">6</span><span class="t">Verification checklist</span><span class="preview">{{PREVIEW_6}}</span></summary>
+    <div class="body">
+      <ul class="checklist">
+        {{CHECKLIST_ITEMS}}
+      </ul>
+    </div>
+  </details>
+
+  <details class="panel" id="s7" open>
+    <summary><span class="num">7</span><span class="t">Open questions</span><span class="preview">{{PREVIEW_7}}</span></summary>
+    <div class="body">
+      <!-- one block per decision the operator must make; each ends with a recommendation -->
+      {{OPEN_QUESTIONS}}
+    </div>
+  </details>
+
+  <footer>
+    <!-- provenance: agents used, scope researched, and the explicit disclaimer -->
+    Researched by {{N_AGENTS}} parallel agents over {{RESEARCH_SCOPE}}.
+    Nothing in this plan has been implemented. Constraints without a file, line, or
+    measured command behind them are labeled as assumptions in the sections above.
+  </footer>
+</main>
+</div>
+
+<script>
+  function setAll(open) {
+    document.querySelectorAll("details.panel").forEach(d => d.open = open);
+  }
+  window.addEventListener("beforeprint", () => setAll(true));
+  const links = document.querySelectorAll("#toc a");
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.toggle("active", l.getAttribute("href") === "#" + e.target.id));
+      }
+    });
+  }, { rootMargin: "-40% 0px -55% 0px" });
+  document.querySelectorAll("details.panel").forEach(d => obs.observe(d));
+</script>
+</body>
+</html>

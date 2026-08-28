@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code Skills & Commands</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-card: rgba(255, 255, 255, 0.03);
+      --bg-card-hover: rgba(255, 255, 255, 0.06);
+      --bg-glass: rgba(255, 255, 255, 0.04);
+      --border: rgba(255, 255, 255, 0.06);
+      --border-hover: rgba(255, 255, 255, 0.12);
+      --text-primary: #e8e8ed;
+      --text-secondary: #8b8b9e;
+      --text-muted: #5a5a6e;
+      --accent-1: #6366f1;
+      --accent-2: #8b5cf6;
+      --accent-3: #a78bfa;
+      --accent-glow: rgba(99, 102, 241, 0.15);
+      --gradient-1: linear-gradient(135deg, #6366f1, #8b5cf6, #a78bfa);
+      --gradient-2: linear-gradient(135deg, #06b6d4, #3b82f6, #6366f1);
+      --gradient-3: linear-gradient(135deg, #f43f5e, #e879f9, #a78bfa);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --radius-xs: 6px;
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* === AMBIENT BACKGROUND === */
+    .ambient {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .ambient::before {
+      content: '';
+      position: absolute;
+      width: 800px;
+      height: 800px;
+      top: -200px;
+      left: -200px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.08), transparent 60%);
+      animation: float1 20s ease-in-out infinite;
+    }
+    .ambient::after {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      bottom: -100px;
+      right: -100px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.06), transparent 60%);
+      animation: float2 25s ease-in-out infinite;
+    }
+    @keyframes float1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(100px, 50px) scale(1.1); }
+      66% { transform: translate(-50px, 100px) scale(0.95); }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-80px, -60px) scale(1.15); }
+    }
+
+    /* === GRID OVERLAY === */
+    .grid-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
+    }
+
+    /* === NAV === */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 32px;
+      background: rgba(10, 10, 15, 0.8);
+      backdrop-filter: blur(20px) saturate(1.5);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: var(--transition);
+    }
+    nav.scrolled {
+      padding: 12px 32px;
+      background: rgba(10, 10, 15, 0.95);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .nav-logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-xs);
+      background: var(--gradient-1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: white;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+    }
+    .nav-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: var(--radius-xs);
+      transition: var(--transition);
+    }
+    .nav-links a:hover {
+      color: var(--text-primary);
+      background: rgba(255,255,255,0.05);
+    }
+    .nav-gh {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.06) !important;
+      border: 1px solid var(--border);
+    }
+    .nav-gh:hover {
+      border-color: var(--border-hover) !important;
+    }
+
+    /* === HERO === */
+    .hero {
+      padding: 160px 32px 100px;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px 6px 8px;
+      border-radius: 100px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+    .hero-badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+      50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+    }
+    .hero h1 {
+      font-size: clamp(48px, 7vw, 80px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+    .hero h1 .gradient-text {
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+    }
+
+    /* === STATS === */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      margin-bottom: 24px;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 48px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      background: var(--gradient-2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* === INSTALL BANNER === */
+    .install-section {
+      max-width: 720px;
+      margin: 0 auto 80px;
+      padding: 0 32px;
+    }
+    .install-card {
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .install-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+    .install-header span {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .install-copy {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: var(--radius-xs);
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: inherit;
+      font-weight: 500;
+    }
+    .install-copy:hover {
+      background: rgba(255,255,255,0.06);
+      color: var(--text-primary);
+      border-color: var(--border-hover);
+    }
+    .install-copy.copied {
+      color: #22c55e;
+      border-color: rgba(34, 197, 94, 0.3);
+    }
+    .install-code {
+      padding: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      overflow-x: auto;
+    }
+    .install-code .comment { color: var(--text-muted); }
+    .install-code .cmd { color: #22c55e; }
+    .install-code .flag { color: var(--accent-3); }
+    .install-code .path { color: #f59e0b; }
+
+    /* === FILTER / SEARCH === */
+    .controls {
+      max-width: 1200px;
+      margin: 0 auto 40px;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+      position: relative;
+    }
+    .search-box svg {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      width: 18px;
+      height: 18px;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 14px 16px 14px 48px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      transition: var(--transition);
+    }
+    .search-box input::placeholder { color: var(--text-muted); }
+    .search-box input:focus {
+      border-color: var(--accent-1);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .toggle-group {
+      display: flex;
+      gap: 4px;
+      padding: 4px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+    .toggle-btn {
+      padding: 10px 20px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: var(--radius-xs);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .toggle-btn.active {
+      background: var(--accent-1);
+      color: white;
+      box-shadow: 0 2px 12px rgba(99, 102, 241, 0.3);
+    }
+    .toggle-btn:hover:not(.active) {
+      color: var(--text-secondary);
+      background: rgba(255,255,255,0.04);
+    }
+    .expand-all-btn {
+      padding: 10px 20px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .expand-all-btn:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: var(--border-hover);
+      color: var(--text-primary);
+    }
+
+    /* === CATEGORIES === */
+    .categories {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .category {
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .category:hover {
+      border-color: var(--border-hover);
+    }
+    .category.expanded {
+      border-color: rgba(99, 102, 241, 0.15);
+      box-shadow: 0 0 40px rgba(99, 102, 241, 0.04);
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      cursor: pointer;
+      user-select: none;
+      transition: var(--transition);
+    }
+    .category-header:hover {
+      background: rgba(255,255,255,0.02);
+    }
+    .category-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+    .category-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .category-name {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 2px;
+    }
+    .category-count {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .category-chevron {
+      width: 20px;
+      height: 20px;
+      color: var(--text-muted);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+    .category.expanded .category-chevron {
+      transform: rotate(180deg);
+    }
+
+    .category-items {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .category.expanded .category-items {
+      max-height: 5000px;
+    }
+    .category-items-inner {
+      padding: 0 24px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 10px;
+    }
+
+    /* === SKILL CARD === */
+    .skill-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      transition: var(--transition);
+      text-decoration: none;
+      color: inherit;
+    }
+    .skill-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border);
+      transform: translateY(-1px);
+    }
+    .skill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 7px;
+      flex-shrink: 0;
+      opacity: 0.7;
+    }
+    .skill-card:hover .skill-dot { opacity: 1; }
+    .skill-name {
+      font-size: 14px;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .skill-name .arrow {
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: var(--transition);
+      color: var(--accent-3);
+      font-size: 12px;
+    }
+    .skill-card:hover .skill-name .arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .skill-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .skill-type-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 100px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .badge-skill {
+      background: rgba(99, 102, 241, 0.12);
+      color: var(--accent-3);
+    }
+    .badge-command {
+      background: rgba(34, 197, 94, 0.12);
+      color: #4ade80;
+    }
+
+    /* === HIDDEN BY SEARCH === */
+    .category.hidden-by-search,
+    .skill-card.hidden-by-search {
+      display: none;
+    }
+
+    /* === FOOTER === */
+    footer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 32px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    footer a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    footer a:hover { color: var(--text-primary); }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      nav { padding: 12px 16px; }
+      .nav-links a:not(.nav-gh) { display: none; }
+      .hero { padding: 120px 20px 60px; }
+      .hero h1 { font-size: 40px; }
+      .stats { gap: 32px; }
+      .stat-value { font-size: 36px; }
+      .controls { padding: 0 16px; }
+      .categories { padding: 0 16px 80px; }
+      .category-items-inner { grid-template-columns: 1fr; }
+      .install-section { padding: 0 16px; }
+      footer { flex-direction: column; gap: 12px; padding: 32px 16px; }
+    }
+
+    /* === CATEGORY COLORS === */
+    .cat-llmwiki .category-icon { background: rgba(245, 158, 11, 0.1); color: #fbbf24; }
+    .cat-ai .category-icon { background: rgba(99, 102, 241, 0.1); color: #818cf8; }
+    .cat-backend .category-icon { background: rgba(6, 182, 212, 0.1); color: #22d3ee; }
+    .cat-java .category-icon { background: rgba(249, 115, 22, 0.1); color: #fb923c; }
+    .cat-django .category-icon { background: rgba(34, 197, 94, 0.1); color: #4ade80; }
+    .cat-go .category-icon { background: rgba(56, 189, 248, 0.1); color: #38bdf8; }
+    .cat-python .category-icon { background: rgba(250, 204, 21, 0.1); color: #fde047; }
+    .cat-cpp .category-icon { background: rgba(168, 85, 247, 0.1); color: #c084fc; }
+    .cat-ts .category-icon { background: rgba(59, 130, 246, 0.1); color: #60a5fa; }
+    .cat-swift .category-icon { background: rgba(244, 63, 94, 0.1); color: #fb7185; }
+    .cat-testing .category-icon { background: rgba(34, 197, 94, 0.1); color: #4ade80; }
+    .cat-security .category-icon { background: rgba(239, 68, 68, 0.1); color: #f87171; }
+    .cat-content .category-icon { background: rgba(232, 121, 249, 0.1); color: #e879f9; }
+    .cat-claude .category-icon { background: rgba(217, 119, 87, 0.1); color: #d97756; }
+    .cat-patterns .category-icon { background: rgba(148, 163, 184, 0.1); color: #94a3b8; }
+    .cat-gcp .category-icon { background: rgba(251, 191, 36, 0.1); color: #fbbf24; }
+    .cat-ops .category-icon { background: rgba(45, 212, 191, 0.1); color: #2dd4bf; }
+    .cat-commands-dev .category-icon { background: rgba(99, 102, 241, 0.1); color: #818cf8; }
+    .cat-commands-lang .category-icon { background: rgba(56, 189, 248, 0.1); color: #38bdf8; }
+    .cat-commands-e2e .category-icon { background: rgba(34, 197, 94, 0.1); color: #4ade80; }
+    .cat-commands-multi .category-icon { background: rgba(232, 121, 249, 0.1); color: #e879f9; }
+    .cat-commands-loops .category-icon { background: rgba(250, 204, 21, 0.1); color: #fde047; }
+    .cat-commands-tools .category-icon { background: rgba(148, 163, 184, 0.1); color: #94a3b8; }
+
+    .cat-llmwiki .skill-dot { background: #fbbf24; }
+    .cat-ai .skill-dot { background: #818cf8; }
+    .cat-backend .skill-dot { background: #22d3ee; }
+    .cat-java .skill-dot { background: #fb923c; }
+    .cat-django .skill-dot { background: #4ade80; }
+    .cat-go .skill-dot { background: #38bdf8; }
+    .cat-python .skill-dot { background: #fde047; }
+    .cat-cpp .skill-dot { background: #c084fc; }
+    .cat-ts .skill-dot { background: #60a5fa; }
+    .cat-swift .skill-dot { background: #fb7185; }
+    .cat-testing .skill-dot { background: #4ade80; }
+    .cat-security .skill-dot { background: #f87171; }
+    .cat-content .skill-dot { background: #e879f9; }
+    .cat-claude .skill-dot { background: #d97756; }
+    .cat-patterns .skill-dot { background: #94a3b8; }
+    .cat-gcp .skill-dot { background: #fbbf24; }
+    .cat-ops .skill-dot { background: #2dd4bf; }
+    .cat-commands-dev .skill-dot { background: #818cf8; }
+    .cat-commands-lang .skill-dot { background: #38bdf8; }
+    .cat-commands-e2e .skill-dot { background: #4ade80; }
+    .cat-commands-multi .skill-dot { background: #e879f9; }
+    .cat-commands-loops .skill-dot { background: #fde047; }
+    .cat-commands-tools .skill-dot { background: #94a3b8; }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+  </style>
+</head>
+<body>
+  <div class="ambient"></div>
+  <div class="grid-overlay"></div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">CC</div>
+      <span class="nav-title">Claude Code Skills</span>
+    </a>
+    <div class="nav-links">
+      <a href="#llmwiki">LLM Wiki</a>
+      <a href="#skills">Skills</a>
+      <a href="#commands">Commands</a>
+      <a href="https://github.com/Oruga420/claude-code-skills" target="_blank" class="nav-gh">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Everything Claude Code Ecosystem
+    </div>
+    <h1>
+      <span class="gradient-text">Skills</span> that make<br>Claude Code deadly
+    </h1>
+    <p>
+      92 skills and 44 slash commands that teach Claude domain-specific patterns,
+      workflows, and best practices. Drop them in and level up instantly.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value">92</div>
+        <div class="stat-label">Skills</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">44</div>
+        <div class="stat-label">Commands</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">16</div>
+        <div class="stat-label">Categories</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <div class="install-section">
+    <div class="install-card">
+      <div class="install-header">
+        <span>Quick Install</span>
+        <button class="install-copy" onclick="copyInstall(this)">Copy</button>
+      </div>
+      <pre class="install-code"><span class="comment"># Clone and install everything</span>
+<span class="cmd">git clone</span> <span class="path">https://github.com/Oruga420/claude-code-skills.git</span>
+<span class="cmd">cp</span> <span class="flag">-r</span> claude-code-skills/*/ <span class="path">~/.claude/skills/</span>
+<span class="cmd">cp</span> claude-code-skills/commands/*.md <span class="path">~/.claude/commands/</span></pre>
+    </div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search" placeholder="Search skills and commands..." autocomplete="off">
+    </div>
+    <div class="toggle-group">
+      <button class="toggle-btn active" data-filter="all">All</button>
+      <button class="toggle-btn" data-filter="skill">Skills</button>
+      <button class="toggle-btn" data-filter="command">Commands</button>
+    </div>
+    <button class="expand-all-btn" id="expandAll">Expand All</button>
+  </div>
+
+  <!-- SKILLS CATEGORIES -->
+  <div class="categories" id="skills">
+    <!-- Populated by JS -->
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>Built with Claude Code &mdash; MIT, except vendored directories (see LICENSE)</span>
+    <a href="https://github.com/Oruga420/claude-code-skills" target="_blank">github.com/Oruga420/claude-code-skills</a>
+  </footer>
+
+  <script>
+    const REPO = 'https://github.com/Oruga420/claude-code-skills';
+
+    const DATA = [
+      {
+        id: 'llmwiki', name: 'LLM Wiki & Knowledge Systems', icon: '📚', type: 'skill',
+        items: [
+          { name: 'arise', desc: 'Bootstrap a Karpathy-style persistent wiki inside any project. Personal mode: weekly tasks with carry-over, goals, habits, and chat history mining. Laboral mode: PRDs, call transcripts, org hierarchy, positions, work projects. Wires /compact to auto-update every session' },
+          { name: 'karpathy', desc: 'Autonomous research and experimentation loop inspired by Karpathy\'s autoresearch — deploys a 4-agent team (Researcher, Executor, Analyst, Lead) to continuously optimize any measurable metric' },
+        ]
+      },
+      {
+        id: 'ai', name: 'AI & Agent Patterns', icon: '🤖', type: 'skill',
+        items: [
+          { name: 'agent-harness-construction', desc: 'Design and optimize AI agent action spaces, tool definitions, and observation formatting for higher completion rates' },
+          { name: 'agentic-engineering', desc: 'Operate as an agentic engineer using eval-first execution, decomposition, and cost-aware model routing' },
+          { name: 'ai-first-engineering', desc: 'Engineering operating model for teams where AI agents generate a large share of implementation output' },
+          { name: 'autonomous-loops', desc: 'Patterns for autonomous Claude Code loops — from sequential pipelines to RFC-driven multi-agent DAG systems' },
+          { name: 'continuous-agent-loop', desc: 'Continuous autonomous agent loops with quality gates, evals, and recovery controls' },
+          { name: 'continuous-learning', desc: 'Automatically extract reusable patterns from Claude Code sessions and save them as learned skills' },
+          { name: 'continuous-learning-v2', desc: 'Instinct-based learning system with confidence scoring that evolves instincts into skills/commands/agents' },
+          { name: 'cost-aware-llm-pipeline', desc: 'Cost optimization for LLM API usage — model routing by task complexity, budget tracking, retry logic, prompt caching' },
+          { name: 'enterprise-agent-ops', desc: 'Operate long-lived agent workloads with observability, security boundaries, and lifecycle management' },
+          { name: 'eval-harness', desc: 'Formal evaluation framework for Claude Code sessions implementing eval-driven development (EDD)' },
+          { name: 'iterative-retrieval', desc: 'Progressively refine context retrieval to solve the subagent context problem' },
+          { name: 'long-running-harness', desc: 'Multi-agent harness: Planner→Generator→Evaluator loop with context resets and sprint contracts' },
+          { name: 'loop-builder', desc: 'Interview-driven builder for autonomous agent loops — loop contract (Goal/Boundaries/SOP/State/Logs), 4 trigger types incl. combo gate script, verifier evidence tiers, evolve cadence. With diagrams + Remotion data-flow videos' },
+          { name: 'nanoclaw-repl', desc: "NanoClaw v2 — ECC's zero-dependency session-aware REPL built on claude -p" },
+          { name: 'ralphinho-rfc-pipeline', desc: 'RFC-driven multi-agent DAG execution with quality gates, merge queues, and work unit orchestration' },
+        ]
+      },
+      {
+        id: 'backend', name: 'Backend & Databases', icon: '🗄️', type: 'skill',
+        items: [
+          { name: 'api-design', desc: 'REST API patterns — resource naming, status codes, pagination, filtering, error responses, versioning, rate limiting' },
+          { name: 'backend-patterns', desc: 'Backend architecture, API design, database optimization for Node.js, Express, and Next.js' },
+          { name: 'clickhouse-io', desc: 'ClickHouse patterns, query optimization, analytics, and data engineering for analytical workloads' },
+          { name: 'database-migrations', desc: 'Migration best practices — schema changes, rollbacks, zero-downtime deployments across PostgreSQL, MySQL, and ORMs' },
+          { name: 'deployment-patterns', desc: 'CI/CD pipelines, Docker containerization, health checks, rollback strategies, production readiness' },
+          { name: 'docker-patterns', desc: 'Docker & Compose — local dev, container security, networking, volume strategies, multi-service orchestration' },
+          { name: 'postgres-patterns', desc: 'PostgreSQL query optimization, schema design, indexing, and security. Based on Supabase best practices' },
+        ]
+      },
+      {
+        id: 'java', name: 'Java & Spring Boot', icon: '☕', type: 'skill',
+        items: [
+          { name: 'java-coding-standards', desc: 'Java coding standards for Spring Boot — naming, immutability, Optional, streams, exceptions, generics, layout' },
+          { name: 'jpa-patterns', desc: 'JPA/Hibernate — entity design, relationships, query optimization, transactions, auditing, indexing, pagination' },
+          { name: 'springboot-patterns', desc: 'Spring Boot architecture — REST API, layered services, data access, caching, async processing, logging' },
+          { name: 'springboot-security', desc: 'Spring Security — authn/authz, validation, CSRF, secrets, headers, rate limiting, dependency security' },
+          { name: 'springboot-tdd', desc: 'TDD for Spring Boot with JUnit 5, Mockito, MockMvc, Testcontainers, and JaCoCo' },
+          { name: 'springboot-verification', desc: 'Verification loop — build, static analysis, tests with coverage, security scans, diff review' },
+        ]
+      },
+      {
+        id: 'django', name: 'Django', icon: '🐍', type: 'skill',
+        items: [
+          { name: 'django-patterns', desc: 'Django architecture — DRF, ORM best practices, caching, signals, middleware, production-grade apps' },
+          { name: 'django-security', desc: 'Django security — authentication, authorization, CSRF, SQL injection prevention, XSS prevention' },
+          { name: 'django-tdd', desc: 'Testing with pytest-django, TDD methodology, factory_boy, mocking, and coverage' },
+          { name: 'django-verification', desc: 'Verification loop — migrations, linting, tests with coverage, security scans, deployment readiness' },
+        ]
+      },
+      {
+        id: 'go', name: 'Go', icon: '🔵', type: 'skill',
+        items: [
+          { name: 'golang-patterns', desc: 'Idiomatic Go patterns for building robust, efficient, and maintainable applications' },
+          { name: 'golang-testing', desc: 'Go testing — table-driven tests, subtests, benchmarks, fuzzing, and coverage with TDD' },
+        ]
+      },
+      {
+        id: 'python', name: 'Python', icon: '🐍', type: 'skill',
+        items: [
+          { name: 'python-patterns', desc: 'Pythonic idioms, PEP 8 standards, type hints, and best practices for robust applications' },
+          { name: 'python-testing', desc: 'Testing with pytest — TDD methodology, fixtures, mocking, parametrization, and coverage' },
+        ]
+      },
+      {
+        id: 'cpp', name: 'C++', icon: '⚙️', type: 'skill',
+        items: [
+          { name: 'cpp-coding-standards', desc: 'C++ Core Guidelines — modern, safe, and idiomatic practices' },
+          { name: 'cpp-testing', desc: 'GoogleTest/CTest — diagnosing failing/flaky tests, coverage, sanitizers' },
+        ]
+      },
+      {
+        id: 'ts', name: 'TypeScript/JS & Frontend', icon: '🌐', type: 'skill',
+        items: [
+          { name: 'coding-standards', desc: 'Universal standards for TypeScript, JavaScript, React, and Node.js development' },
+          { name: 'frontend-patterns', desc: 'React, Next.js, state management, performance optimization, and UI best practices' },
+          { name: 'frontend-slides', desc: 'Create animation-rich HTML presentations from scratch or by converting PowerPoint files' },
+          { name: 'huashu-design', desc: 'Hi-fi HTML prototypes, demos, slides, animations, design variants + design-direction advisor and expert 5-dimension review — with MP4/GIF export' },
+        ]
+      },
+      {
+        id: 'swift', name: 'Swift & iOS', icon: '🍎', type: 'skill',
+        items: [
+          { name: 'foundation-models-on-device', desc: 'Apple FoundationModels — on-device LLM, guided generation with @Generable, tool calling, streaming in iOS 26+' },
+          { name: 'liquid-glass-design', desc: 'iOS 26 Liquid Glass — dynamic glass material with blur, reflection, and interactive morphing' },
+          { name: 'swift-actor-persistence', desc: 'Thread-safe persistence using actors — in-memory cache with file-backed storage' },
+          { name: 'swift-concurrency-6-2', desc: 'Swift 6.2 Approachable Concurrency — single-threaded by default, @concurrent for background offloading' },
+          { name: 'swift-protocol-di-testing', desc: 'Protocol-based DI for testable Swift — mock file system, network, and external APIs' },
+          { name: 'swiftui-patterns', desc: 'SwiftUI architecture — @Observable state, view composition, navigation, performance optimization' },
+        ]
+      },
+      {
+        id: 'testing', name: 'Testing & Quality', icon: '✅', type: 'skill',
+        items: [
+          { name: 'e2e-testing', desc: 'Playwright E2E — Page Object Model, CI/CD integration, artifact management, flaky test strategies' },
+          { name: 'playwright-draft-filler', desc: 'Install Playwright and auto-fill website forms with your data, saving as DRAFT only — safelist/blocklist guards prevent any Publish/Post/Send/Submit click' },
+          { name: 'tdd-workflow', desc: 'Test-driven development — 80%+ coverage including unit, integration, and E2E tests' },
+          { name: 'verification-loop', desc: 'Comprehensive verification system for Claude Code sessions' },
+          { name: 'bughunter', desc: 'Systematic bug hunting — static analysis patterns, vulnerability checks, contextual code review' },
+        ]
+      },
+      {
+        id: 'security', name: 'Security', icon: '🛡️', type: 'skill',
+        items: [
+          { name: 'security-review', desc: 'Comprehensive security checklist — authentication, user input, secrets, API endpoints, payments' },
+          { name: 'security-scan', desc: 'Scan .claude/ directory for vulnerabilities, misconfigurations, and injection risks' },
+          { name: 'st3gg', desc: 'Steganography toolkit — encode text/files into images, decode hidden data, and analyze images for steganographic content' },
+        ]
+      },
+      {
+        id: 'content', name: 'Content & Business', icon: '📝', type: 'skill',
+        items: [
+          { name: 'article-writing', desc: 'Write articles, guides, blog posts in a distinctive voice derived from examples or brand guidance' },
+          { name: 'content-engine', desc: 'Platform-native content for X, LinkedIn, TikTok, YouTube, newsletters, and multi-platform campaigns' },
+          { name: 'investor-materials', desc: 'Pitch decks, one-pagers, investor memos, accelerator applications, financial models' },
+          { name: 'investor-outreach', desc: 'Cold emails, warm intros, follow-ups, and investor communications for fundraising' },
+          { name: 'market-research', desc: 'Market research, competitive analysis, investor due diligence, and industry intelligence' },
+          { name: 'suno-creator', desc: 'Generate Suno AI-ready song output — style prompt, lyrics, title, and production context from a song concept' },
+          { name: 'orugas-design-studio', desc: 'Generate images with Gemini 3 (flash/pro) and Imagen — aspect ratios, references, img2img edits, search grounding, and camera/lighting/style controls' },
+        ]
+      },
+      {
+        id: 'creative', name: 'Creative Media', icon: '🎬', type: 'skill',
+        items: [
+          { name: 'seedance-animator', desc: 'Interactive anime video pipeline via Replicate — Nano Banana 2 for stills, Seedance 2 / 2 Lite for animation, multi-agent orchestration with /arise + /karpathy + /ralphinho improvement loops' },
+        ]
+      },
+      {
+        id: 'claude', name: 'Claude Code Tooling', icon: '🔶', type: 'skill',
+        items: [
+          { name: 'configure-ecc', desc: 'Interactive installer for Everything Claude Code — select and install skills and rules' },
+          { name: 'plankton-code-quality', desc: 'Write-time quality enforcement — auto-formatting, linting, Claude-powered fixes via hooks' },
+          { name: 'psmux', desc: 'Toggle psmux (terminal multiplexer) for Claude Code Agent Teams' },
+          { name: 'session-insights', desc: 'Analyze session history for usage insights, friction analysis, and personalized suggestions' },
+          { name: 'skill-stocktake', desc: 'Audit skills and commands for quality — Quick Scan and Full Stocktake modes' },
+          { name: 'strategic-compact', desc: 'Context compaction at logical intervals to preserve context through task phases' },
+          { name: 'ultraplan', desc: 'Deep multi-agent exploration — parallel research agents before comprehensive execution plans' },
+          { name: 'search-first', desc: 'Research-before-coding workflow — search for existing tools, libraries, and patterns first' },
+          { name: 'skill-shed', desc: 'Search the GitHub skill backlog for skills not installed locally — fallback when local skills don\'t cover a domain' },
+          { name: 'watch', desc: 'Give Claude a video input — yt-dlp download, scene-aware ffmpeg frames, captions or Whisper transcript for any video URL or local file' },
+        ]
+      },
+      {
+        id: 'patterns', name: 'Design Patterns & Reference', icon: '📐', type: 'skill',
+        items: [
+          { name: 'content-hash-cache-pattern', desc: 'Cache file processing with SHA-256 content hashes — path-independent, auto-invalidating' },
+          { name: 'regex-vs-llm-structured-text', desc: 'Decision framework for regex vs LLM when parsing structured text' },
+          { name: 'project-guidelines-example', desc: 'Example project-specific skill template based on a real production app' },
+        ]
+      },
+      {
+        id: 'gcp', name: 'GCP & Google Workspace', icon: '☁️', type: 'skill',
+        items: [
+          { name: 'conectaesamamada', desc: 'Connect to GCP — step-by-step, no fumbling' },
+          { name: 'gws-installer', desc: 'Interactive Google Workspace CLI installer — OAuth setup and authentication' },
+          { name: 'refresh-google-tokens', desc: 'Refresh Google Cloud CLI auth and ADC in one step — fixes expired token errors' },
+        ]
+      },
+      {
+        id: 'ops', name: 'Operations & Documents', icon: '📋', type: 'skill',
+        items: [
+          { name: 'nutrient-document-processing', desc: 'Process, convert, OCR, extract, redact, sign, and fill documents via Nutrient DWS API' },
+          { name: 'onboard', desc: 'Onboard a new employee — Google Workspace, Slack provisioning, welcome email' },
+          { name: 'visa-doc-translate', desc: 'Translate visa docs to English and create a bilingual PDF' },
+          { name: 'Jira-loop', desc: 'Watch Jira tickets on a recurring loop via the Atlassian CLI — detects changes and writes per-ticket Markdown answers with implementation plans' },
+        ]
+      },
+      // ── COMMANDS ──
+      {
+        id: 'commands-dev', name: 'Commands: Development Workflow', icon: '⌨️', type: 'command',
+        items: [
+          { name: '/plan', desc: 'Restate requirements, assess risks, create step-by-step implementation plan', path: 'commands/plan.md' },
+          { name: '/tdd', desc: 'Scaffold interfaces, generate tests first, then implement. 80%+ coverage', path: 'commands/tdd.md' },
+          { name: '/build-fix', desc: 'Fix build and compilation errors', path: 'commands/build-fix.md' },
+          { name: '/code-review', desc: 'Run comprehensive code quality review', path: 'commands/code-review.md' },
+          { name: '/refactor-clean', desc: 'Clean up dead code and consolidate duplicates', path: 'commands/refactor-clean.md' },
+          { name: '/verify', desc: 'Run the full verification loop', path: 'commands/verify.md' },
+          { name: '/test-coverage', desc: 'Generate test coverage report', path: 'commands/test-coverage.md' },
+          { name: '/checkpoint', desc: 'Save a progress checkpoint', path: 'commands/checkpoint.md' },
+          { name: '/eval', desc: 'Run evaluation framework', path: 'commands/eval.md' },
+          { name: '/quality-gate', desc: 'Run quality gate checks', path: 'commands/quality-gate.md' },
+        ]
+      },
+      {
+        id: 'commands-lang', name: 'Commands: Language-Specific', icon: '🔤', type: 'command',
+        items: [
+          { name: '/go-test', desc: 'Go TDD — table-driven tests first, 80%+ coverage', path: 'commands/go-test.md' },
+          { name: '/go-review', desc: 'Go code review — idiomatic patterns, concurrency safety, error handling', path: 'commands/go-review.md' },
+          { name: '/go-build', desc: 'Fix Go build errors, go vet warnings, and linter issues', path: 'commands/go-build.md' },
+          { name: '/python-review', desc: 'Python review — PEP 8, type hints, security, Pythonic idioms', path: 'commands/python-review.md' },
+        ]
+      },
+      {
+        id: 'commands-e2e', name: 'Commands: E2E Testing', icon: '🧪', type: 'command',
+        items: [
+          { name: '/e2e', desc: 'Generate and run Playwright E2E tests with screenshots, videos, and traces', path: 'commands/e2e.md' },
+        ]
+      },
+      {
+        id: 'commands-multi', name: 'Commands: Multi-Model Collaboration', icon: '🔀', type: 'command',
+        items: [
+          { name: '/multi-plan', desc: 'Multi-model collaborative planning', path: 'commands/multi-plan.md' },
+          { name: '/multi-execute', desc: 'Multi-model collaborative execution', path: 'commands/multi-execute.md' },
+          { name: '/multi-workflow', desc: 'Multi-model collaborative development workflow', path: 'commands/multi-workflow.md' },
+          { name: '/multi-backend', desc: 'Backend-focused multi-model development', path: 'commands/multi-backend.md' },
+          { name: '/multi-frontend', desc: 'Frontend-focused multi-model development', path: 'commands/multi-frontend.md' },
+          { name: '/model-route', desc: 'Route tasks to the optimal model', path: 'commands/model-route.md' },
+          { name: '/orchestrate', desc: 'Multi-agent orchestration', path: 'commands/orchestrate.md' },
+        ]
+      },
+      {
+        id: 'commands-loops', name: 'Commands: Agent Loops & Learning', icon: '🔄', type: 'command',
+        items: [
+          { name: '/loop-start', desc: 'Start an agent loop', path: 'commands/loop-start.md' },
+          { name: '/loop-status', desc: 'Check agent loop status', path: 'commands/loop-status.md' },
+          { name: '/learn', desc: 'Extract reusable patterns from the current session', path: 'commands/learn.md' },
+          { name: '/learn-eval', desc: 'Learn with self-evaluation before saving', path: 'commands/learn-eval.md' },
+          { name: '/instinct-status', desc: 'Show learned instincts with confidence scores', path: 'commands/instinct-status.md' },
+          { name: '/instinct-import', desc: 'Import instincts from file or URL', path: 'commands/instinct-import.md' },
+          { name: '/instinct-export', desc: 'Export instincts to file', path: 'commands/instinct-export.md' },
+          { name: '/evolve', desc: 'Analyze instincts and generate evolved structures', path: 'commands/evolve.md' },
+          { name: '/promote', desc: 'Promote project-scoped instincts to global scope', path: 'commands/promote.md' },
+          { name: '/projects', desc: 'List known projects and instinct statistics', path: 'commands/projects.md' },
+        ]
+      },
+      {
+        id: 'commands-tools', name: 'Commands: Tools & Utilities', icon: '🔧', type: 'command',
+        items: [
+          { name: '/claw', desc: 'Start NanoClaw v2 — persistent REPL with model routing, branching, and metrics', path: 'commands/claw.md' },
+          { name: '/psmux', desc: 'Toggle Agent Teams split panes', path: 'commands/psmux.md' },
+          { name: '/sessions', desc: 'Session management', path: 'commands/sessions.md' },
+          { name: '/harness-audit', desc: 'Audit agent harness configuration', path: 'commands/harness-audit.md' },
+          { name: '/hubspot-scan', desc: 'HubSpot on-demand activity feed', path: 'commands/hubspot-scan.md' },
+          { name: '/onboard', desc: 'Onboard a new employee', path: 'commands/onboard.md' },
+          { name: '/pm2', desc: 'Initialize PM2 process manager', path: 'commands/pm2.md' },
+          { name: '/setup-pm', desc: 'Configure preferred package manager', path: 'commands/setup-pm.md' },
+          { name: '/skill-create', desc: 'Analyze git history and generate SKILL.md files', path: 'commands/skill-create.md' },
+          { name: '/update-codemaps', desc: 'Update project codemaps', path: 'commands/update-codemaps.md' },
+          { name: '/update-docs', desc: 'Update project documentation', path: 'commands/update-docs.md' },
+        ]
+      },
+    ];
+
+    // ── RENDER ──
+    const container = document.querySelector('.categories');
+
+    function getLink(item, catType) {
+      if (item.path) return `${REPO}/blob/master/${item.path}`;
+      if (catType === 'command') return `${REPO}/tree/master/commands`;
+      return `${REPO}/tree/master/${item.name}`;
+    }
+
+    function render() {
+      container.innerHTML = DATA.map(cat => `
+        <div class="category cat-${cat.id}" data-type="${cat.type}" id="${cat.id}">
+          <div class="category-header" onclick="toggleCategory(this)">
+            <div class="category-icon">${cat.icon}</div>
+            <div class="category-info">
+              <div class="category-name">${cat.name}</div>
+              <div class="category-count">${cat.items.length} ${cat.type}${cat.items.length > 1 ? 's' : ''}</div>
+            </div>
+            <svg class="category-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div class="category-items">
+            <div class="category-items-inner">
+              ${cat.items.map(item => `
+                <a href="${getLink(item, cat.type)}" target="_blank" class="skill-card" data-name="${item.name}" data-desc="${item.desc.toLowerCase()}">
+                  <div class="skill-dot"></div>
+                  <div>
+                    <div class="skill-name">
+                      ${item.name}
+                      <span class="arrow">&rarr;</span>
+                    </div>
+                    <div class="skill-desc">${item.desc}</div>
+                  </div>
+                </a>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+    render();
+
+    // ── TOGGLE CATEGORY ──
+    function toggleCategory(header) {
+      header.parentElement.classList.toggle('expanded');
+    }
+
+    // ── EXPAND ALL ──
+    let allExpanded = false;
+    document.getElementById('expandAll').addEventListener('click', function() {
+      allExpanded = !allExpanded;
+      document.querySelectorAll('.category:not(.hidden-by-search)').forEach(c => {
+        c.classList.toggle('expanded', allExpanded);
+      });
+      this.textContent = allExpanded ? 'Collapse All' : 'Expand All';
+    });
+
+    // ── FILTER TOGGLE ──
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const filter = this.dataset.filter;
+        document.querySelectorAll('.category').forEach(cat => {
+          if (filter === 'all') {
+            cat.style.display = '';
+          } else {
+            cat.style.display = cat.dataset.type === filter ? '' : 'none';
+          }
+        });
+      });
+    });
+
+    // ── SEARCH ──
+    const searchInput = document.getElementById('search');
+    searchInput.addEventListener('input', function() {
+      const q = this.value.toLowerCase().trim();
+      document.querySelectorAll('.category').forEach(cat => {
+        let visible = 0;
+        cat.querySelectorAll('.skill-card').forEach(card => {
+          const match = !q || card.dataset.name.includes(q) || card.dataset.desc.includes(q);
+          card.classList.toggle('hidden-by-search', !match);
+          if (match) visible++;
+        });
+        cat.classList.toggle('hidden-by-search', visible === 0);
+        if (q && visible > 0) cat.classList.add('expanded');
+      });
+    });
+
+    // ── NAV SCROLL ──
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // ── COPY INSTALL ──
+    function copyInstall(btn) {
+      const text = `git clone https://github.com/Oruga420/claude-code-skills.git\ncp -r claude-code-skills/*/ ~/.claude/skills/\ncp claude-code-skills/commands/*.md ~/.claude/commands/`;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+      });
+    }
+
+    // ── KEYBOARD SHORTCUT ──
+    document.addEventListener('keydown', e => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        searchInput.focus();
+      }
+    });
+  </script>
+</body>
+</html>

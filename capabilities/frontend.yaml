@@ -1,0 +1,44 @@
+# Capabilities: Frontend
+# Agregar a CLAUDE.md para que Claude active estos skills segun necesidad
+
+skills:
+  coding-standards:
+    nombre: "TypeScript/JS Coding Standards"
+    categoria: "Frontend"
+    capabilities:
+      - Estandares universales TypeScript/JavaScript
+      - Best practices React
+      - Patrones Node.js
+      - Linting y formateo
+    activar_cuando:
+      - "Se escribe codigo TypeScript o JavaScript"
+      - "Se revisa codigo frontend"
+    requiere_confirmacion: true
+
+  frontend-patterns:
+    nombre: "Frontend Patterns"
+    categoria: "Frontend"
+    capabilities:
+      - Patrones React y Next.js
+      - State management
+      - Optimizacion de rendimiento
+      - UI best practices
+      - Server-side rendering
+    activar_cuando:
+      - "Se desarrolla con React o Next.js"
+      - "Se optimiza rendimiento frontend"
+      - "Se implementa SSR"
+    requiere_confirmacion: true
+
+  frontend-slides:
+    nombre: "Frontend Slides"
+    categoria: "Frontend"
+    capabilities:
+      - Crear presentaciones HTML animadas
+      - Convertir PowerPoint a web
+      - Animaciones CSS avanzadas
+      - Diseno responsive de slides
+    activar_cuando:
+      - "Se crea una presentacion web"
+      - "Se convierte PPT/PPTX a HTML"
+    requiere_confirmacion: true

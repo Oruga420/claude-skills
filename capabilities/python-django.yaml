@@ -1,0 +1,93 @@
+# Capabilities: Python y Django
+# Agregar a CLAUDE.md para que Claude active estos skills segun necesidad
+
+skills:
+  python-patterns:
+    nombre: "Python Patterns"
+    categoria: "Python"
+    capabilities:
+      - Idiomas Pythonicos y PEP 8
+      - Type hints y anotaciones
+      - Patrones de diseno en Python
+      - Manejo eficiente de datos
+      - Buenas practicas de modularizacion
+    activar_cuando:
+      - "Se escribe codigo Python nuevo"
+      - "Se refactoriza codigo Python existente"
+      - "Se revisa estilo o idiomaticidad Python"
+    requiere_confirmacion: true
+
+  python-testing:
+    nombre: "Python Testing"
+    categoria: "Python"
+    capabilities:
+      - Testing con pytest
+      - Metodologia TDD
+      - Fixtures y parametrizacion
+      - Mocking con unittest.mock
+      - Cobertura de codigo
+    activar_cuando:
+      - "Se escriben tests en Python"
+      - "Se configura pytest"
+      - "Se necesita aumentar cobertura"
+    requiere_confirmacion: true
+
+  django-patterns:
+    nombre: "Django Patterns"
+    categoria: "Django"
+    capabilities:
+      - Arquitectura Django en capas
+      - REST APIs con Django REST Framework
+      - ORM best practices y queries N+1
+      - Caching con Django cache framework
+      - Signals y middleware
+      - Settings split por entorno
+    activar_cuando:
+      - "Se trabaja en proyecto Django"
+      - "Se crean vistas o serializers DRF"
+      - "Se optimizan queries del ORM"
+    requiere_confirmacion: true
+
+  django-security:
+    nombre: "Django Security"
+    categoria: "Django"
+    capabilities:
+      - Autenticacion y autorizacion
+      - Proteccion CSRF
+      - Prevencion de SQL injection
+      - Prevencion de XSS
+      - Configuraciones seguras de deployment
+    activar_cuando:
+      - "Se implementa autenticacion en Django"
+      - "Se manejan inputs de usuario"
+      - "Se configura Django para produccion"
+    requiere_confirmacion: true
+
+  django-tdd:
+    nombre: "Django TDD"
+    categoria: "Django"
+    capabilities:
+      - Testing con pytest-django
+      - Factories con factory_boy
+      - Mocking de servicios externos
+      - Testing de APIs DRF
+      - Cobertura y reporte
+    activar_cuando:
+      - "Se escriben tests en Django"
+      - "Se hace TDD en proyecto Django"
+      - "Se testean endpoints DRF"
+    requiere_confirmacion: true
+
+  django-verification:
+    nombre: "Django Verification"
+    categoria: "Django"
+    capabilities:
+      - Verificacion de migraciones
+      - Linting de codigo
+      - Tests con cobertura
+      - Scans de seguridad
+      - Checklist de readiness para deploy
+    activar_cuando:
+      - "Se prepara PR o release de Django"
+      - "Se hace verificacion pre-deploy"
+    requiere_confirmacion: true

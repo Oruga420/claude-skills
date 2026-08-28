@@ -1,0 +1,35 @@
+# Capabilities: Go
+# Agregar a CLAUDE.md para que Claude active estos skills segun necesidad
+
+skills:
+  golang-patterns:
+    nombre: "Go Patterns"
+    categoria: "Go"
+    capabilities:
+      - Patrones idiomaticos de Go
+      - Manejo de errores con error wrapping
+      - Concurrencia con goroutines y channels
+      - Interfaces y composicion
+      - Estructura de proyectos Go
+      - Context propagation
+    activar_cuando:
+      - "Se escribe codigo Go nuevo"
+      - "Se refactoriza codigo Go"
+      - "Se disenan interfaces o paquetes"
+    requiere_confirmacion: true
+
+  golang-testing:
+    nombre: "Go Testing"
+    categoria: "Go"
+    capabilities:
+      - Table-driven tests
+      - Subtests y test helpers
+      - Benchmarks de rendimiento
+      - Fuzzing para edge cases
+      - Cobertura de codigo
+      - Metodologia TDD en Go
+    activar_cuando:
+      - "Se escriben tests en Go"
+      - "Se optimiza rendimiento Go"
+      - "Se buscan edge cases con fuzzing"
+    requiere_confirmacion: true

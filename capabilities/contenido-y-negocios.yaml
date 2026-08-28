@@ -1,0 +1,92 @@
+# Capabilities: Contenido y Negocios
+# Agregar a CLAUDE.md para que Claude active estos skills segun necesidad
+
+skills:
+  content-engine:
+    nombre: "Content Engine"
+    categoria: "Contenido"
+    capabilities:
+      - Contenido nativo para X (Twitter)
+      - Contenido para LinkedIn
+      - Scripts para TikTok
+      - Contenido para YouTube
+      - Newsletters
+      - Campanas multi-plataforma
+      - Reglas especificas por plataforma
+    activar_cuando:
+      - "Se crea contenido para redes sociales"
+      - "Se repurposea contenido entre plataformas"
+    requiere_confirmacion: true
+
+  article-writing:
+    nombre: "Article Writing"
+    categoria: "Contenido"
+    capabilities:
+      - Articulos y guias
+      - Blog posts y tutoriales
+      - Issues de newsletter
+      - Long-form content
+      - Voz derivada de ejemplos o brand guidance
+    activar_cuando:
+      - "Se escribe un articulo o blog post"
+      - "Se crea contenido long-form"
+    requiere_confirmacion: true
+
+  suno-creator:
+    nombre: "Suno Creator"
+    categoria: "Contenido"
+    trigger: "/suno-creator"
+    capabilities:
+      - Style prompt para Suno AI
+      - Letras de canciones
+      - Titulos y contexto de produccion
+    activar_cuando:
+      - "Se crea musica con Suno AI"
+      - "Se generan letras de canciones"
+    requiere_confirmacion: true
+
+  investor-materials:
+    nombre: "Investor Materials"
+    categoria: "Negocios"
+    capabilities:
+      - Pitch decks
+      - One-pagers para inversores
+      - Investor memos
+      - Aplicaciones a aceleradoras
+      - Modelos financieros
+      - Materiales de fundraising
+    activar_cuando:
+      - "Se preparan materiales para inversores"
+      - "Se crea pitch deck"
+      - "Se aplica a aceleradora"
+    requiere_confirmacion: true
+
+  investor-outreach:
+    nombre: "Investor Outreach"
+    categoria: "Negocios"
+    capabilities:
+      - Cold emails a inversores
+      - Blurbs para warm intros
+      - Follow-ups de reuniones
+      - Update emails para inversores
+      - Comunicaciones de fundraising
+    activar_cuando:
+      - "Se redacta email a inversores"
+      - "Se hace outreach de fundraising"
+    requiere_confirmacion: true
+
+  market-research:
+    nombre: "Market Research"
+    categoria: "Negocios"
+    capabilities:
+      - Investigacion de mercado
+      - Analisis competitivo
+      - Due diligence para inversores
+      - Inteligencia de industria
+      - Atribucion de fuentes
+      - Resumenes orientados a decisiones
+    activar_cuando:
+      - "Se investiga un mercado"
+      - "Se analiza competencia"
+      - "Se hace due diligence"
+    requiere_confirmacion: true

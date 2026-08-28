@@ -1,0 +1,32 @@
+name: tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  bats:
+    name: bats-core
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install bats-core
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bats jq
+
+      - name: Show versions
+        run: |
+          bats --version
+          jq --version
+          bash --version | head -1
+
+      - name: Run test suites
+        env:
+          TERM: xterm-256color
+          BATS_FORMATTER: tap
+        run: ./tests/run.sh

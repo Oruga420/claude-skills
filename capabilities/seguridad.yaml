@@ -1,0 +1,53 @@
+# Capabilities: Seguridad
+# Agregar a CLAUDE.md para que Claude active estos skills segun necesidad
+
+skills:
+  security-review:
+    nombre: "Security Review"
+    categoria: "Seguridad"
+    capabilities:
+      - Revision de autenticacion y autorizacion
+      - Validacion de inputs de usuario
+      - Manejo seguro de secretos
+      - Seguridad de endpoints API
+      - Revision de pagos y datos sensibles
+      - Checklist OWASP
+    activar_cuando:
+      - "Se implementa autenticacion"
+      - "Se manejan inputs de usuario"
+      - "Se crean endpoints de API"
+      - "Se trabaja con pagos o datos sensibles"
+    requiere_confirmacion: true
+    prioridad: alta
+
+  security-scan:
+    nombre: "Security Scan (AgentShield)"
+    categoria: "Seguridad"
+    capabilities:
+      - Escaneo de directorio .claude/
+      - Auditoria de CLAUDE.md
+      - Revision de settings.json
+      - Verificacion de MCP servers
+      - Analisis de hooks
+      - Revision de definiciones de agentes
+      - Output en Terminal, JSON, Markdown, HTML
+    activar_cuando:
+      - "Se audita configuracion de Claude Code"
+      - "Se buscan vulnerabilidades en config"
+      - "Se verifica seguridad del entorno"
+    requiere_confirmacion: true
+    prioridad: alta
+
+  st3gg:
+    nombre: "ST3GG Steganography"
+    categoria: "Seguridad"
+    capabilities:
+      - Codificar texto/archivos en imagenes
+      - Decodificar datos ocultos
+      - Analizar imagenes por contenido esteganografico
+      - CLI toolkit ST3GG
+    activar_cuando:
+      - "Se trabaja con esteganografia"
+      - "Se ocultan datos en imagenes"
+      - "Se analizan imagenes por datos ocultos"
+    requiere_confirmacion: true

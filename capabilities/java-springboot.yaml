@@ -1,0 +1,94 @@
+# Capabilities: Java y Spring Boot
+# Agregar a CLAUDE.md para que Claude active estos skills segun necesidad
+
+skills:
+  java-coding-standards:
+    nombre: "Java Coding Standards"
+    categoria: "Java"
+    capabilities:
+      - Convenciones de naming Java
+      - Inmutabilidad y uso de Optional
+      - Streams y programacion funcional
+      - Manejo de excepciones
+      - Generics y layout de proyecto
+    activar_cuando:
+      - "Se escribe codigo Java nuevo"
+      - "Se revisa o refactoriza Java"
+    requiere_confirmacion: true
+
+  jpa-patterns:
+    nombre: "JPA/Hibernate Patterns"
+    categoria: "Java"
+    capabilities:
+      - Diseno de entidades JPA
+      - Relaciones y fetch strategies
+      - Optimizacion de queries JPQL/Criteria
+      - Transacciones y locking
+      - Auditoria e indexacion
+      - Paginacion y connection pooling
+    activar_cuando:
+      - "Se disenan entidades JPA"
+      - "Se optimizan queries Hibernate"
+      - "Se configuran relaciones de BD"
+    requiere_confirmacion: true
+
+  springboot-patterns:
+    nombre: "Spring Boot Patterns"
+    categoria: "Spring Boot"
+    capabilities:
+      - Arquitectura REST en capas
+      - Servicios y data access patterns
+      - Caching con Spring Cache
+      - Procesamiento asincrono
+      - Logging y observabilidad
+    activar_cuando:
+      - "Se crea servicio Spring Boot"
+      - "Se disenan controladores REST"
+      - "Se implementa caching o async"
+    requiere_confirmacion: true
+
+  springboot-security:
+    nombre: "Spring Security"
+    categoria: "Spring Boot"
+    capabilities:
+      - Autenticacion y autorizacion
+      - Validacion de inputs
+      - Proteccion CSRF
+      - Manejo de secretos
+      - Headers de seguridad
+      - Rate limiting
+      - Seguridad de dependencias
+    activar_cuando:
+      - "Se implementa seguridad en Spring"
+      - "Se configura autenticacion"
+      - "Se audita seguridad de la app"
+    requiere_confirmacion: true
+
+  springboot-tdd:
+    nombre: "Spring Boot TDD"
+    categoria: "Spring Boot"
+    capabilities:
+      - TDD con JUnit 5
+      - Mocking con Mockito
+      - Testing con MockMvc
+      - Integration tests con Testcontainers
+      - Cobertura con JaCoCo
+    activar_cuando:
+      - "Se escriben tests Spring Boot"
+      - "Se hace TDD en Spring"
+      - "Se configuran integration tests"
+    requiere_confirmacion: true
+
+  springboot-verification:
+    nombre: "Spring Boot Verification"
+    categoria: "Spring Boot"
+    capabilities:
+      - Build y compilacion
+      - Analisis estatico
+      - Tests con cobertura
+      - Scans de seguridad
+      - Review de diffs
+    activar_cuando:
+      - "Se prepara PR o release Spring Boot"
+      - "Se verifica build antes de deploy"
+    requiere_confirmacion: true

@@ -1,0 +1,1096 @@
+# ============================================================================
+# SKILLS_INDEX.yaml
+# ----------------------------------------------------------------------------
+# Master index of every Claude Code skill in this repo.
+# READ THIS FILE FIRST before choosing a skill. Each entry tells you:
+#   - name          : canonical skill name (matches folder + SKILL.md frontmatter)
+#   - folder        : path to the skill directory
+#   - activation    : slash command(s) that trigger it, if any
+#   - triggers      : natural-language phrases a user might say
+#   - use_when      : plain-text description of the situation it fits
+#   - avoid_when    : (optional) situations where it's the WRONG choice
+#   - examples      : short user-utterance examples with the correct pick
+#   - category      : grouping label for quick scanning
+#
+# Quick category map:
+#   agents-harness | engineering-ops | language-patterns | language-testing |
+#   language-security | language-verification | frameworks | databases |
+#   frontend | ios-swift | security | devops | docs-content | business |
+#   learning-systems | tooling | workflows | integrations | research
+# ============================================================================
+
+meta:
+  version: 1
+  total_skills: 99
+  maintainer: Oruga420
+  read_before_use: true
+  tip: >
+    When the user's request is ambiguous, scan `triggers` and `examples` first.
+    When the user types a slash, match against `activation`. Prefer the most
+    specific skill. If nothing matches, fall back to `skill-shed` to search for
+    more skills.
+
+skills:
+
+  # ---------------------------------------------------------------------------
+  # AGENT HARNESS & ORCHESTRATION
+  # ---------------------------------------------------------------------------
+  - name: agent-harness-construction
+    folder: agent-harness-construction/
+    activation: null
+    category: agents-harness
+    triggers: ["design an agent", "tool definitions", "action space", "observation format", "agent completion rate"]
+    use_when: Designing or tuning how an agent plans, calls tools, recovers from errors, and converges on completion.
+    examples:
+      - "Help me improve my agent's tool calling reliability" -> agent-harness-construction
+      - "How should I format observations for my coding agent?" -> agent-harness-construction
+
+  - name: autonomous-loops
+    folder: autonomous-loops/
+    activation: null
+    category: agents-harness
+    triggers: ["autonomous loop", "multi-agent DAG", "RFC pipeline", "self-running agent"]
+    use_when: Building Claude Code loops that run without human input, from simple pipelines to multi-agent DAGs.
+    examples:
+      - "Set up a loop that keeps refactoring until tests pass" -> autonomous-loops
+
+  - name: continuous-agent-loop
+    folder: continuous-agent-loop/
+    activation: null
+    category: agents-harness
+    triggers: ["continuous loop", "quality gate", "recovery controls", "long-running loop"]
+    use_when: You need a long-running autonomous loop with eval gates and safe recovery.
+    examples:
+      - "I want an agent to keep improving a metric overnight with safety rails" -> continuous-agent-loop
+
+  - name: appbuilder
+    folder: appbuilder/
+    activation: /appbuilder
+    category: agents-harness
+    triggers: ["build an app from this photo", "app from mockup", "new project from image", "idea to production", "photo to app", "construye una app de esta foto"]
+    use_when: >
+      Full pipeline for a NEW project: Desktop folder with the user's
+      work/personal prefix (asked on first run, then remembered in a profile
+      file outside the skill folder), /arise memory harness inside, goals
+      extracted from a photo or description, orchestrated fable-it build looping
+      until every goal passes, arise update, private GitHub repo, and Vercel
+      deploy. Reads ~/.claude/appbuilder-profile.md at Step 0.5 so config
+      survives re-installing the skill; ADDENDUM.md adds a second Step 6 route
+      for work projects that must land inside an org monorepo on one permitted
+      branch and subtree instead of getting their own repo.
+    examples:
+      - "here is a mockup screenshot, build the whole app and put it online" -> appbuilder
+      - "nuevo proyecto desde esta imagen, repo privado y deploy" -> appbuilder
+
+  - name: loop-builder
+    folder: loop-builder/
+    activation: /loop-builder
+    category: agents-harness
+    triggers: ["build a loop", "loop contract", "autonomous loop", "recurring agent", "loop engineer", "gate script", "evolve loop"]
+    use_when: >
+      Designing a production-grade autonomous loop via a sharp interview: goal,
+      boundaries (via negativa), SOP, trigger type (for-loop / cron / event /
+      combo gate script), verifier evidence, and evolve cadence. Scaffolds
+      loops/<name>/README.md (contract + state + logs) in the current project.
+      Includes the original video diagrams and Remotion-animated data-flow videos.
+    examples:
+      - "quiero un agente que revise mi inbox cada 30 min y solo trabaje cuando haya algo real" -> loop-builder
+      - "set up a loop that keeps my docs in sync with the code" -> loop-builder
+
+  - name: long-running-harness
+    folder: long-running-harness/
+    activation: null
+    category: agents-harness
+    triggers: ["long running app", "planner generator evaluator", "sprint contract", "context reset"]
+    use_when: Building a multi-agent harness (Planner -> Generator -> Evaluator) for apps that outlive a single session.
+    examples:
+      - "I want to build an app that takes weeks of agent time" -> long-running-harness
+
+  - name: kimi
+    folder: kimi/
+    activation: /kimi
+    category: agents-harness
+    triggers: ["kimi", "que lo haga kimi", "usa kimi", "kimi k3", "build tunnel", "delegate build to another model"]
+    use_when: >
+      Delegating build work to Kimi K3 through a sealed local tunnel while the
+      Claude Code session stays on Anthropic. Opus orchestrates; kimiagent
+      foremen drive the tunnel runner with provider env injected only into the
+      isolated child process. Requires the local tunnel setup (~/.claude/kimi/
+      runner + Moonshot key in .env) and the kimiagent agent — see SKILL.md.
+    avoid_when: The code is client-owned or otherwise confidential — never send it through the tunnel.
+    examples:
+      - "/kimi rebuild the cork board app web-only" -> kimi
+      - "que kimi construya el dashboard, tu solo supervisa" -> kimi
+
+  - name: ralphinho-rfc-pipeline
+    folder: ralphinho-rfc-pipeline/
+    activation: null
+    category: agents-harness
+    triggers: ["RFC pipeline", "merge queue", "work unit", "multi-agent DAG"]
+    use_when: Running an RFC-driven multi-agent DAG with quality gates and a merge queue.
+    examples:
+      - "Execute this RFC with a DAG of agents and gates" -> ralphinho-rfc-pipeline
+
+  - name: karpathy
+    folder: karpathy/
+    activation: /karpathy
+    category: agents-harness
+    triggers: ["autoresearch", "optimize a metric", "experiment loop", "karpathy loop"]
+    use_when: You want to continuously optimize any measurable metric via modify -> measure -> keep/discard -> repeat. Deploys a 4-agent team.
+    examples:
+      - "Optimize my ad click-through-rate automatically" -> karpathy
+      - "/karpathy on landing_page.html for conversion" -> karpathy
+
+  - name: nanoclaw-repl
+    folder: nanoclaw-repl/
+    activation: /claw
+    category: agents-harness
+    triggers: ["nanoclaw", "REPL", "claw", "zero-dependency repl"]
+    use_when: Operating or extending the NanoClaw v2 REPL built on claude -p.
+    examples:
+      - "Start a claw session with metrics" -> nanoclaw-repl
+
+  - name: enterprise-agent-ops
+    folder: enterprise-agent-ops/
+    activation: null
+    category: agents-harness
+    triggers: ["enterprise agent", "observability", "security boundaries", "agent lifecycle"]
+    use_when: Operating long-lived agent workloads for a company with monitoring and governance.
+    examples:
+      - "Deploy agents at company scale with audit trails" -> enterprise-agent-ops
+
+  # ---------------------------------------------------------------------------
+  # ENGINEERING OPS / META
+  # ---------------------------------------------------------------------------
+  - name: agentic-engineering
+    folder: agentic-engineering/
+    activation: null
+    category: engineering-ops
+    triggers: ["agentic engineer", "eval-first", "decomposition", "cost-aware model routing"]
+    use_when: Operating as an agentic engineer — eval-first execution, decomposition, cost-aware model routing.
+    examples:
+      - "How should I structure my work as an AI-first engineer?" -> agentic-engineering
+
+  - name: ai-first-engineering
+    folder: ai-first-engineering/
+    activation: null
+    category: engineering-ops
+    triggers: ["AI-first team", "agent-generated code", "operating model"]
+    use_when: Designing an engineering operating model where AI agents produce most of the code.
+    examples:
+      - "How should my team work if agents write 80% of our code?" -> ai-first-engineering
+
+  - name: cost-aware-llm-pipeline
+    folder: cost-aware-llm-pipeline/
+    activation: null
+    category: engineering-ops
+    triggers: ["cost optimization", "model routing", "budget tracking", "prompt caching"]
+    use_when: Controlling LLM costs through model routing, budgets, retries, and caching.
+    examples:
+      - "My Claude bill is too high, help me route cheaper models" -> cost-aware-llm-pipeline
+
+  - name: eval-harness
+    folder: eval-harness/
+    activation: /eval
+    category: engineering-ops
+    triggers: ["eval-driven development", "eval harness", "EDD", "formal evals"]
+    use_when: Running formal evaluations on Claude Code sessions using eval-driven development.
+    examples:
+      - "Set up evals for my coding agent" -> eval-harness
+
+  - name: verification-loop
+    folder: verification-loop/
+    activation: /verify
+    category: engineering-ops
+    triggers: ["verification loop", "pre-merge checks", "pre-release checks"]
+    use_when: Running a comprehensive verification system across a Claude Code session.
+    examples:
+      - "Verify everything before I ship this" -> verification-loop
+
+  - name: strategic-compact
+    folder: strategic-compact/
+    activation: /checkpoint
+    category: engineering-ops
+    triggers: ["manual compact", "context compaction", "checkpoint"]
+    use_when: You need to compact context at a logical phase boundary instead of waiting for auto-compact.
+    examples:
+      - "We're switching phases, compact now" -> strategic-compact
+
+  - name: iterative-retrieval
+    folder: iterative-retrieval/
+    activation: null
+    category: engineering-ops
+    triggers: ["subagent context", "retrieval refinement", "progressive search"]
+    use_when: Solving the subagent context problem via progressive retrieval refinement.
+    examples:
+      - "My subagent keeps losing context" -> iterative-retrieval
+
+  - name: search-first
+    folder: search-first/
+    activation: null
+    category: engineering-ops
+    triggers: ["search before coding", "find existing library", "don't reinvent"]
+    use_when: Before writing custom code, search for existing tools, libraries, and patterns.
+    examples:
+      - "I need a CSV parser" -> search-first (before writing one)
+
+  - name: regex-vs-llm-structured-text
+    folder: regex-vs-llm-structured-text/
+    activation: null
+    category: engineering-ops
+    triggers: ["regex or LLM", "parse structured text", "extraction strategy"]
+    use_when: Choosing between regex and LLM for parsing structured text.
+    examples:
+      - "Should I use regex or Claude to parse these emails?" -> regex-vs-llm-structured-text
+
+  - name: content-hash-cache-pattern
+    folder: content-hash-cache-pattern/
+    activation: null
+    category: engineering-ops
+    triggers: ["content hash cache", "SHA-256 cache", "file processing cache"]
+    use_when: Caching expensive file processing via SHA-256 content hashes.
+    examples:
+      - "Cache my PDF parser results but invalidate on content change" -> content-hash-cache-pattern
+
+  - name: ultraplan
+    folder: ultraplan/
+    activation: /ultraplan
+    category: engineering-ops
+    triggers: ["deep plan", "multi-agent plan", "parallel research plan"]
+    use_when: Complex tasks that need parallel research agents + dependency graph + risk assessment before coding.
+    examples:
+      - "Plan this massive refactor deeply" -> ultraplan
+
+  - name: livetrack
+    folder: livetrack/
+    activation: /livetrack
+    category: engineering-ops
+    triggers: ["live progress board", "trackea esto", "track this ticket", "avance en vivo", "progress bars per task", "hazme el board"]
+    use_when: >
+      The operator wants to watch work move while it happens. Opens a live board
+      (self-refreshing HTML backed by one JSON state file) for a project, ticket
+      or task, then stays active for the rest of the session: every task started
+      or finished, every decision taken, every blocker and unblock, and anything
+      that needs the operator's input is written the moment it happens. Progress
+      bar per task plus what each task is, what done looks like, and how it was
+      verified. Driven by scripts/livetrack.py - never hand-edit the json or html.
+    avoid_when: >
+      A durable per-project snapshot at a breakpoint is what's wanted - that's
+      projectstatus. A chronological append-only log of finished work - that's
+      logit. livetrack is intra-session and per-task; it replaces neither.
+    examples:
+      - "quiero ver el avance en vivo de este ticket" -> livetrack
+      - "trackea el progreso mientras trabajas y hazme un html con barras" -> livetrack
+      - "where does this project stand right now" -> projectstatus (NOT livetrack)
+
+  # ---------------------------------------------------------------------------
+  # LANGUAGE PATTERNS
+  # ---------------------------------------------------------------------------
+  - name: coding-standards
+    folder: coding-standards/
+    activation: null
+    category: language-patterns
+    triggers: ["TypeScript standards", "JavaScript standards", "React standards", "Node standards"]
+    use_when: Writing or reviewing TS / JS / React / Node code and you want universal standards.
+    examples:
+      - "Review this React component for quality" -> coding-standards
+
+  - name: python-patterns
+    folder: python-patterns/
+    activation: null
+    category: language-patterns
+    triggers: ["pythonic", "PEP 8", "type hints", "python best practices"]
+    use_when: Writing or reviewing Python code.
+    examples:
+      - "Refactor this Python to be more Pythonic" -> python-patterns
+
+  - name: golang-patterns
+    folder: golang-patterns/
+    activation: null
+    category: language-patterns
+    triggers: ["idiomatic Go", "Go best practices", "go conventions"]
+    use_when: Writing or reviewing Go code.
+    examples:
+      - "Is this Go idiomatic?" -> golang-patterns
+
+  - name: java-coding-standards
+    folder: java-coding-standards/
+    activation: null
+    category: language-patterns
+    triggers: ["Java standards", "Spring Boot naming", "Optional usage", "Java project layout"]
+    use_when: Writing or reviewing Java code, especially Spring Boot.
+    examples:
+      - "Review these Java DTOs for standards" -> java-coding-standards
+
+  - name: cpp-coding-standards
+    folder: cpp-coding-standards/
+    activation: null
+    category: language-patterns
+    triggers: ["C++ Core Guidelines", "modern C++", "cpp style"]
+    use_when: Writing, reviewing, or refactoring C++ code.
+    examples:
+      - "Is this C++ safe and modern?" -> cpp-coding-standards
+
+  # ---------------------------------------------------------------------------
+  # LANGUAGE TESTING
+  # ---------------------------------------------------------------------------
+  - name: tdd-workflow
+    folder: tdd-workflow/
+    activation: /tdd
+    category: language-testing
+    triggers: ["write tests first", "TDD", "test-driven", "red green refactor"]
+    use_when: Writing a new feature, fixing a bug, or refactoring — anything where tests should come first with 80%+ coverage.
+    examples:
+      - "Add a new endpoint with tests" -> tdd-workflow
+      - "/tdd feature xyz" -> tdd-workflow
+
+  - name: python-testing
+    folder: python-testing/
+    activation: null
+    category: language-testing
+    triggers: ["pytest", "python test", "fixtures", "parametrize"]
+    use_when: Writing Python tests — pytest, fixtures, mocking, parametrization, coverage.
+    examples:
+      - "Write pytest tests for this service" -> python-testing
+
+  - name: golang-testing
+    folder: golang-testing/
+    activation: /go-test
+    category: language-testing
+    triggers: ["table-driven tests", "go test", "go fuzz", "go benchmark"]
+    use_when: Writing Go tests — table-driven, subtests, benchmarks, fuzzing.
+    examples:
+      - "Add Go tests with 80% coverage" -> golang-testing
+
+  - name: cpp-testing
+    folder: cpp-testing/
+    activation: null
+    category: language-testing
+    triggers: ["GoogleTest", "CTest", "C++ tests", "sanitizer"]
+    use_when: Writing, fixing, or tuning C++ tests — GoogleTest/CTest, flakes, sanitizers.
+    examples:
+      - "Add GoogleTest with sanitizer coverage" -> cpp-testing
+
+  - name: django-tdd
+    folder: django-tdd/
+    activation: null
+    category: language-testing
+    triggers: ["pytest-django", "factory_boy", "DRF tests"]
+    use_when: Writing Django tests — pytest-django, factory_boy, DRF endpoints.
+    examples:
+      - "TDD a new Django endpoint" -> django-tdd
+
+  - name: springboot-tdd
+    folder: springboot-tdd/
+    activation: null
+    category: language-testing
+    triggers: ["JUnit 5", "Mockito", "MockMvc", "Testcontainers"]
+    use_when: TDD for Spring Boot — JUnit 5, Mockito, MockMvc, Testcontainers, JaCoCo.
+    examples:
+      - "Add Spring Boot tests for this service" -> springboot-tdd
+
+  - name: e2e-testing
+    folder: e2e-testing/
+    activation: /e2e
+    category: language-testing
+    triggers: ["Playwright", "E2E", "Page Object Model", "flaky tests"]
+    use_when: Writing or running Playwright E2E tests with CI artifacts and flake strategies.
+    examples:
+      - "Add E2E tests for the checkout flow" -> e2e-testing
+
+  - name: playwright-draft-filler
+    folder: playwright-draft-filler/
+    activation: null
+    category: language-testing
+    triggers: ["fill form", "auto-fill website", "save as draft", "browser automation no submit", "load data into site", "draft mode", "guardar borrador"]
+    use_when: Auto-filling a webpage form with user data and stopping at Save Draft / Save — never Publish/Post/Send/Submit. Installs Playwright, runs codegen for selectors and storageState login, dry-runs first, asserts the save button against a safelist before clicking.
+    examples:
+      - "Fill this listing on X with my data and save as draft" -> playwright-draft-filler
+      - "Load this product info into the admin and just save, don't publish" -> playwright-draft-filler
+      - "Pre-populate the form, I'll review before publishing" -> playwright-draft-filler
+
+  - name: swift-protocol-di-testing
+    folder: swift-protocol-di-testing/
+    activation: null
+    category: language-testing
+    triggers: ["protocol DI", "swift testing", "mock filesystem", "mock network"]
+    use_when: Writing testable Swift code via protocol-based dependency injection.
+    examples:
+      - "Mock the filesystem in my Swift tests" -> swift-protocol-di-testing
+
+  # ---------------------------------------------------------------------------
+  # LANGUAGE SECURITY
+  # ---------------------------------------------------------------------------
+  - name: django-security
+    folder: django-security/
+    activation: null
+    category: language-security
+    triggers: ["Django security", "CSRF", "SQL injection Django", "XSS Django"]
+    use_when: Hardening Django apps — auth, CSRF, SQLi, XSS, secure deploy.
+    examples:
+      - "Audit my Django app for security" -> django-security
+
+  - name: springboot-security
+    folder: springboot-security/
+    activation: null
+    category: language-security
+    triggers: ["Spring Security", "authn Spring", "authz Spring", "CSRF Spring"]
+    use_when: Hardening Spring Boot services — authn, authz, CSRF, secrets, headers, rate limiting.
+    examples:
+      - "Secure my Spring Boot API" -> springboot-security
+
+  # ---------------------------------------------------------------------------
+  # LANGUAGE VERIFICATION
+  # ---------------------------------------------------------------------------
+  - name: django-verification
+    folder: django-verification/
+    activation: null
+    category: language-verification
+    triggers: ["Django pre-release", "Django verify", "Django deploy check"]
+    use_when: Pre-release verification for Django — migrations, lint, tests, security, deploy-readiness.
+    examples:
+      - "Verify my Django project before deploy" -> django-verification
+
+  - name: springboot-verification
+    folder: springboot-verification/
+    activation: null
+    category: language-verification
+    triggers: ["Spring Boot verify", "pre-release Spring", "build + tests + scan"]
+    use_when: Pre-release verification for Spring Boot — build, static analysis, tests, security scans, diff review.
+    examples:
+      - "Verify this Spring Boot PR before merge" -> springboot-verification
+
+  # ---------------------------------------------------------------------------
+  # FRAMEWORKS
+  # ---------------------------------------------------------------------------
+  - name: backend-patterns
+    folder: backend-patterns/
+    activation: null
+    category: frameworks
+    triggers: ["Node backend", "Express patterns", "Next API routes"]
+    use_when: Designing backend architecture — Node, Express, Next.js API routes.
+    examples:
+      - "Design my Next.js API layer" -> backend-patterns
+
+  - name: api-design
+    folder: api-design/
+    activation: null
+    category: frameworks
+    triggers: ["REST API design", "resource naming", "pagination", "rate limiting", "API versioning"]
+    use_when: Designing production REST APIs.
+    examples:
+      - "How should I version and paginate this API?" -> api-design
+
+  - name: django-patterns
+    folder: django-patterns/
+    activation: null
+    category: frameworks
+    triggers: ["Django architecture", "DRF", "ORM", "Django signals", "Django middleware"]
+    use_when: Building production Django apps with DRF, ORM best practices, caching, signals.
+    examples:
+      - "Architect a Django + DRF app" -> django-patterns
+
+  - name: springboot-patterns
+    folder: springboot-patterns/
+    activation: null
+    category: frameworks
+    triggers: ["Spring Boot architecture", "layered services", "Spring caching", "Spring logging"]
+    use_when: Building Java Spring Boot backends — REST, layers, data, caching, async, logging.
+    examples:
+      - "Design a Spring Boot service" -> springboot-patterns
+
+  - name: jpa-patterns
+    folder: jpa-patterns/
+    activation: null
+    category: frameworks
+    triggers: ["JPA", "Hibernate", "entity design", "query optimization", "Spring Boot ORM"]
+    use_when: Designing JPA/Hibernate entities, relationships, queries, transactions.
+    examples:
+      - "Optimize my Hibernate entities" -> jpa-patterns
+
+  - name: frontend-patterns
+    folder: frontend-patterns/
+    activation: null
+    category: frontend
+    triggers: ["React", "Next.js", "state management", "UI performance"]
+    use_when: Frontend architecture — React, Next.js, state, performance.
+    examples:
+      - "How should I manage state in Next.js?" -> frontend-patterns
+
+  - name: frontend-slides
+    folder: frontend-slides/
+    activation: null
+    category: frontend
+    triggers: ["HTML slides", "presentation", "pitch deck html", "PPT to web"]
+    use_when: Building animation-rich HTML presentations or converting PPT to web.
+    examples:
+      - "Turn this PPTX into an animated web deck" -> frontend-slides
+
+  - name: awesome-design-md
+    folder: awesome-design-md/
+    activation: null
+    category: frontend
+    triggers: ["DESIGN.md", "brand voice UI", "landing page design"]
+    use_when: Generating UI that should match a specific brand's design language (Vercel, Stripe, Linear, etc.).
+    examples:
+      - "Build a landing page in the style of Linear" -> awesome-design-md
+
+  - name: huashu-design
+    folder: huashu-design/
+    activation: null
+    category: frontend
+    triggers: ["hi-fi prototype", "interactive demo", "HTML slide deck", "animation demo", "design variants", "app prototype mockup", "iOS prototype", "export MP4", "export GIF", "60fps video", "design philosophy", "design review", "做原型", "动画Demo", "幻灯片", "设计风格"]
+    use_when: HTML-as-medium visual deliverables — high-fidelity prototypes, slide decks, motion design, app mockups, design-direction exploration, MP4/GIF export from HTML animations, expert 5-axis design review. Embodies UX/animator/slides/prototype expert per task.
+    avoid_when: Production web apps, SEO sites, backend-driven systems (use frontend-patterns instead).
+    examples:
+      - "Make a hi-fi iPhone app prototype I can click through" -> huashu-design
+      - "Export this HTML animation to MP4 with BGM" -> huashu-design
+      - "Recommend 3 design directions for this landing page" -> huashu-design
+      - "Review this design across visual hierarchy / detail / innovation" -> huashu-design
+
+  # ---------------------------------------------------------------------------
+  # iOS / SWIFT
+  # ---------------------------------------------------------------------------
+  - name: swiftui-patterns
+    folder: swiftui-patterns/
+    activation: null
+    category: ios-swift
+    triggers: ["SwiftUI", "@Observable", "view composition", "iOS UI"]
+    use_when: Building SwiftUI apps — state, navigation, performance.
+    examples:
+      - "Design a SwiftUI navigation stack" -> swiftui-patterns
+
+  - name: swift-concurrency-6-2
+    folder: swift-concurrency-6-2/
+    activation: null
+    category: ios-swift
+    triggers: ["Swift concurrency", "@concurrent", "approachable concurrency", "isolated conformance"]
+    use_when: Writing Swift 6.2 concurrency code.
+    examples:
+      - "Offload this to a background thread in Swift 6.2" -> swift-concurrency-6-2
+
+  - name: swift-actor-persistence
+    folder: swift-actor-persistence/
+    activation: null
+    category: ios-swift
+    triggers: ["swift actor", "thread safe cache", "file-backed storage"]
+    use_when: Building thread-safe Swift persistence using actors.
+    examples:
+      - "Thread-safe cache for my iOS app" -> swift-actor-persistence
+
+  - name: liquid-glass-design
+    folder: liquid-glass-design/
+    activation: null
+    category: ios-swift
+    triggers: ["Liquid Glass", "iOS 26 design", "glass material", "SwiftUI glass"]
+    use_when: Building iOS 26 Liquid Glass UI — SwiftUI, UIKit, WidgetKit.
+    examples:
+      - "Make this button Liquid Glass" -> liquid-glass-design
+
+  - name: foundation-models-on-device
+    folder: foundation-models-on-device/
+    activation: null
+    category: ios-swift
+    triggers: ["FoundationModels", "on-device LLM", "@Generable", "iOS 26 AI"]
+    use_when: Using Apple's FoundationModels framework for on-device LLM in iOS 26+.
+    examples:
+      - "Add on-device text generation to my iOS app" -> foundation-models-on-device
+
+  # ---------------------------------------------------------------------------
+  # DATABASES
+  # ---------------------------------------------------------------------------
+  - name: postgres-patterns
+    folder: postgres-patterns/
+    activation: null
+    category: databases
+    triggers: ["Postgres", "query optimization", "indexing", "schema design", "Supabase"]
+    use_when: Designing or tuning PostgreSQL — queries, schema, indexes, security.
+    examples:
+      - "Optimize this slow Postgres query" -> postgres-patterns
+
+  - name: clickhouse-io
+    folder: clickhouse-io/
+    activation: null
+    category: databases
+    triggers: ["ClickHouse", "analytics", "OLAP", "data engineering"]
+    use_when: ClickHouse query optimization, analytics workloads, data engineering.
+    examples:
+      - "Design this ClickHouse analytics schema" -> clickhouse-io
+
+  - name: database-migrations
+    folder: database-migrations/
+    activation: null
+    category: databases
+    triggers: ["migration", "zero-downtime migration", "Prisma migration", "Drizzle", "golang-migrate"]
+    use_when: Running schema or data migrations with rollback and zero-downtime concerns.
+    examples:
+      - "Plan a zero-downtime migration for this column" -> database-migrations
+
+  # ---------------------------------------------------------------------------
+  # SECURITY / DEVOPS
+  # ---------------------------------------------------------------------------
+  - name: security-review
+    folder: security-review/
+    activation: null
+    category: security
+    triggers: ["security review", "auth review", "payment code", "handling secrets"]
+    use_when: Adding auth, handling user input, working with secrets, building payment or sensitive features.
+    examples:
+      - "Review my auth middleware for security holes" -> security-review
+
+  - name: security-scan
+    folder: security-scan/
+    activation: null
+    category: security
+    triggers: ["scan .claude", "AgentShield", "hooks audit", "MCP audit"]
+    use_when: Scanning your Claude Code configuration for vulnerabilities.
+    examples:
+      - "Scan my .claude directory for risks" -> security-scan
+
+  - name: bughunter
+    folder: bughunter/
+    activation: /bughunter
+    category: security
+    triggers: ["hunt bugs", "find bugs", "vulnerability scan", "static analysis"]
+    use_when: Systematic bug hunting across a codebase — static analysis + contextual review.
+    examples:
+      - "Hunt bugs in this repo" -> bughunter
+
+  - name: final-review
+    folder: final-review/
+    activation: /final-review
+    category: security
+    triggers: ["full review", "audit this", "final review", "security + bug report", "auditoria completa"]
+    use_when: Chaining bughunter + security-scan + security-review into one adversarially-verified HTML report.
+    examples:
+      - "Run a full security and bug audit and give me an HTML report" -> final-review
+      - "/final-review the changes before I publish" -> final-review
+
+  - name: buzz-it
+    folder: buzz-it/
+    activation: /buzz-it
+    category: agents-harness
+    triggers: ["buzz-it", "pedile a", "preguntale al agente", "necesito este file de", "ask the other laptop"]
+    use_when: Asking another laptop's Claude Code agent for something over the Buzz relay and bringing back its reply.
+    avoid_when: The work can be done on this machine — a mention wakes a real remote session.
+    examples:
+      - "/buzz-it <agent-name> pasame el ultimo ultraplan" -> buzz-it
+      - "pedile a <otro-agente> que corra los tests" -> buzz-it
+
+  - name: docker-patterns
+    folder: docker-patterns/
+    activation: null
+    category: devops
+    triggers: ["Docker", "docker-compose", "container security", "volumes", "networks"]
+    use_when: Docker and Compose patterns for dev, security, networking, orchestration.
+    examples:
+      - "Write a safe Dockerfile for this Node app" -> docker-patterns
+
+  - name: deployment-patterns
+    folder: deployment-patterns/
+    activation: null
+    category: devops
+    triggers: ["CI/CD", "deployment", "rollback", "health check", "production readiness"]
+    use_when: Setting up CI/CD, health checks, rollbacks, production readiness.
+    examples:
+      - "Build a deploy pipeline for this web app" -> deployment-patterns
+
+  - name: plankton-code-quality
+    folder: plankton-code-quality/
+    activation: null
+    category: devops
+    triggers: ["Plankton", "format on save", "lint hook", "write-time quality"]
+    use_when: Enforcing code quality at write-time via auto-format / lint / Claude-powered fixes on every edit.
+    examples:
+      - "Set up write-time linting with hooks" -> plankton-code-quality
+
+  # ---------------------------------------------------------------------------
+  # LEARNING SYSTEMS
+  # ---------------------------------------------------------------------------
+  - name: continuous-learning
+    folder: continuous-learning/
+    activation: /learn
+    category: learning-systems
+    triggers: ["learn from session", "extract patterns", "save as skill"]
+    use_when: Extracting reusable patterns from a session and saving them as skills.
+    examples:
+      - "Save this approach as a new skill" -> continuous-learning
+
+  - name: continuous-learning-v2
+    folder: continuous-learning-v2/
+    activation: null
+    category: learning-systems
+    triggers: ["instinct", "confidence scoring", "project-scoped learning", "session hooks"]
+    use_when: Instinct-based learning via hooks with project-scoped memory and evolution to skills/commands/agents.
+    examples:
+      - "Log an instinct about this mistake" -> continuous-learning-v2
+
+  - name: session-insights
+    folder: session-insights/
+    activation: null
+    category: learning-systems
+    triggers: ["session insights", "usage analysis", "friction analysis"]
+    use_when: Analyzing Claude Code session history for usage patterns and improvement ideas.
+    examples:
+      - "What am I doing inefficiently across sessions?" -> session-insights
+
+  - name: skill-stocktake
+    folder: skill-stocktake/
+    activation: null
+    category: learning-systems
+    triggers: ["audit skills", "skill quality", "stocktake"]
+    use_when: Auditing Claude skills and commands for quality (Quick Scan or Full).
+    examples:
+      - "Audit all my skills for quality" -> skill-stocktake
+
+  - name: skill-shed
+    folder: skill-shed/
+    activation: null
+    category: learning-systems
+    triggers: ["skill shed", "more skills", "find a skill for", "check the shed"]
+    use_when: Local skills don't cover the user's domain — search the external backlog repo.
+    examples:
+      - "Do I have a skill for blockchain audits?" -> skill-shed
+
+  # ---------------------------------------------------------------------------
+  # DOCS / CONTENT
+  # ---------------------------------------------------------------------------
+  - name: article-writing
+    folder: article-writing/
+    activation: null
+    category: docs-content
+    triggers: ["write an article", "blog post", "newsletter", "tutorial", "guide"]
+    use_when: Writing long-form content where voice and structure matter.
+    examples:
+      - "Write me a blog post in my voice about X" -> article-writing
+
+  - name: content-engine
+    folder: content-engine/
+    activation: null
+    category: docs-content
+    triggers: ["X posts", "LinkedIn content", "TikTok script", "content calendar", "multi-platform"]
+    use_when: Building platform-native or multi-platform content systems.
+    examples:
+      - "Adapt this essay for X, LinkedIn, and TikTok" -> content-engine
+
+  # ---------------------------------------------------------------------------
+  # BUSINESS / FUNDRAISING
+  # ---------------------------------------------------------------------------
+  - name: investor-outreach
+    folder: investor-outreach/
+    activation: null
+    category: business
+    triggers: ["cold email investor", "VC outreach", "investor follow-up", "update email"]
+    use_when: Drafting investor-facing outreach and update emails.
+    examples:
+      - "Draft a cold email to this angel" -> investor-outreach
+
+  - name: investor-materials
+    folder: investor-materials/
+    activation: null
+    category: business
+    triggers: ["pitch deck", "one-pager", "investor memo", "financial model", "use of funds"]
+    use_when: Creating investor-facing documents that must stay consistent across assets.
+    examples:
+      - "Update the deck and memo together" -> investor-materials
+
+  - name: market-research
+    folder: market-research/
+    activation: null
+    category: research
+    triggers: ["market sizing", "competitor analysis", "VC due diligence", "technology scan"]
+    use_when: Conducting market, competitive, or industry research with source attribution.
+    examples:
+      - "Research top 10 competitors in this space" -> market-research
+
+  # ---------------------------------------------------------------------------
+  # TOOLING / INSTALLERS / UTILITIES
+  # ---------------------------------------------------------------------------
+  - name: configure-ecc
+    folder: configure-ecc/
+    activation: null
+    category: tooling
+    triggers: ["install ECC", "configure skills", "Everything Claude Code setup"]
+    use_when: Interactive installer for ECC — picks skills and rules for user or project scope.
+    examples:
+      - "Install ECC skills into this project" -> configure-ecc
+
+  - name: project-guidelines-example
+    folder: project-guidelines-example/
+    activation: null
+    category: tooling
+    triggers: ["project skill template", "example CLAUDE.md per project"]
+    use_when: Need a template for a project-specific skill.
+    examples:
+      - "Give me a template project skill" -> project-guidelines-example
+
+  - name: psmux
+    folder: psmux/
+    activation: /psmux
+    category: tooling
+    triggers: ["psmux", "agent teams", "tmux split", "toggle panes"]
+    use_when: Toggling psmux for Agent Teams split panes.
+    examples:
+      - "/psmux on" -> psmux
+
+  - name: gws-installer
+    folder: gws-installer/
+    activation: null
+    category: integrations
+    triggers: ["install gws", "Google Workspace CLI", "gws OAuth"]
+    use_when: Installing Google Workspace CLI (gws) for members of your team.
+    examples:
+      - "Set up gws on my machine" -> gws-installer
+
+  - name: refresh-google-tokens
+    folder: refresh-google-tokens/
+    activation: null
+    category: integrations
+    triggers: ["gcloud expired", "ADC expired", "refresh google token", "reauth gcloud"]
+    use_when: Fixing expired gcloud or ADC credentials in one step.
+    examples:
+      - "Gcloud says my token expired" -> refresh-google-tokens
+
+  - name: conectaesamamada
+    folder: conectaesamamada/
+    activation: null
+    category: integrations
+    triggers: ["connect to GCP", "gcp login", "gcp setup"]
+    use_when: Connecting to GCP without fumbling — exact steps in order.
+    examples:
+      - "Log me into GCP cleanly" -> conectaesamamada
+
+  - name: onboard
+    folder: onboard/
+    activation: null
+    category: integrations
+    triggers: ["onboard employee", "new hire", "provision Google account", "Slack SCIM"]
+    use_when: Onboarding a new employee at your company (Google + Slack + welcome email).
+    examples:
+      - "Onboard new hire Maria" -> onboard
+
+
+  - name: visa-doc-translate
+    folder: visa-doc-translate/
+    activation: null
+    category: integrations
+    triggers: ["visa translation", "bilingual PDF", "translate documents"]
+    use_when: Translating visa application images to English and producing a bilingual PDF.
+    examples:
+      - "Translate these visa docs to English" -> visa-doc-translate
+
+  - name: sm-post
+    folder: sm-post/
+    activation: /sm-post
+    category: integrations
+    triggers:
+      - "post to X"
+      - "post to Twitter"
+      - "post to LinkedIn"
+      - "publish on social media"
+      - "share this on Threads"
+      - "posteá esto"
+      - "publicá en redes"
+      - "postear en"
+      - "Ayrshare"
+    use_when: >
+      Publishing a post to one or more social networks (Twitter/X, LinkedIn,
+      Facebook, Instagram, TikTok, YouTube, Threads, Bluesky, Pinterest,
+      Reddit, Telegram, Google Business) via the Ayrshare API. Accepts
+      direct text, a file path, or content inferred from the conversation.
+    avoid_when: >
+      Drafting the *content* of the post — use `content-engine` or
+      `article-writing` to write the copy first, then hand it to `sm-post`
+      to publish.
+    examples:
+      - "/sm-post \"Shipping v2 today 🚀\"" -> sm-post
+      - "posteá el borrador en LinkedIn y X" -> sm-post
+      - "publicá ./draft.md en todas las redes" -> sm-post
+
+  - name: nutrient-document-processing
+    folder: nutrient-document-processing/
+    activation: null
+    category: integrations
+    triggers: ["Nutrient DWS", "PDF OCR", "redact PDF", "fill form", "document processing"]
+    use_when: Processing/OCR/redact/sign/fill documents via Nutrient DWS API.
+    examples:
+      - "OCR this scanned PDF and redact SSNs" -> nutrient-document-processing
+
+  - name: Jira-loop
+    folder: Jira-loop/
+    activation: /Jira-loop
+    category: integrations
+    triggers:
+      - "watch this Jira ticket"
+      - "keep an eye on PROJ-123"
+      - "monitor my Jira"
+      - "babysit ticket"
+      - "check the ticket status and comments"
+      - "vigila este ticket"
+      - "revisa el ticket cada X minutos"
+    use_when: >
+      Watching one or more Jira tickets on a recurring loop via the Atlassian
+      CLI (acli). Each pass reads status + comments, detects changes since the
+      last pass, researches the open question, and writes a per-ticket Markdown
+      answer file (title = ticket + question, body = question + proposed answer,
+      plus a code-change implementation plan when one is needed). Read-only on
+      Jira; output is local Markdown the operator reviews and sends.
+    avoid_when: >
+      Posting a reply directly to Jira, or applying code changes — this skill
+      only reads Jira and writes a proposed answer + plan to a local file.
+    examples:
+      - "/Jira-loop PROJ-42 PROJ-43" -> Jira-loop
+      - "keep an eye on these two tickets every 5 min" -> Jira-loop
+      - "vigila PROJ-42 y PROJ-43 cada 5 minutos" -> Jira-loop
+
+  - name: st3gg
+    folder: st3gg/
+    activation: null
+    category: integrations
+    triggers: ["steganography", "hide data in image", "decode hidden message"]
+    use_when: Encoding/decoding hidden data in images using ST3GG.
+    examples:
+      - "Hide this file in that PNG" -> st3gg
+
+  - name: suno-creator
+    folder: suno-creator/
+    activation: null
+    category: integrations
+    triggers: ["Suno song", "generate lyrics", "style prompt Suno"]
+    use_when: Producing Suno-ready song output (Style prompt, Lyrics, Title, production notes).
+    examples:
+      - "Make me a Suno prompt for a lo-fi track" -> suno-creator
+
+  - name: notebook-research
+    folder: notebook-research/
+    activation: /notebook-research
+    category: integrations
+    triggers:
+      - "create notebook"
+      - "NotebookLM"
+      - "add sources to notebook"
+      - "research and save to notebook"
+      - "generate podcast from notebook"
+      - "query notebook"
+      - "list my notebooks"
+    use_when: >
+      Creating, managing, and querying Google NotebookLM notebooks from Claude Code.
+      Includes auto-bootstrap: installs nlm CLI, registers MCP server, and handles
+      Google auth with browser login. Supports adding sources, web research,
+      audio podcast generation, cross-notebook queries, and pipelines.
+    avoid_when: >
+      General web research without NotebookLM — use market-research or search-first instead.
+    examples:
+      - "Create a NotebookLM notebook about AI agents" -> notebook-research
+      - "Add this URL to my research notebook" -> notebook-research
+
+  - name: watch
+    folder: watch/
+    activation: /watch
+    category: integrations
+    triggers: ["watch this video", "summarize this YouTube video", "what happens in this video", "analyze this mp4", "transcript of this video"]
+    use_when: >
+      Giving Claude a video input. /watch <url-or-path> [question] downloads the video
+      with yt-dlp, extracts scene-aware frames with ffmpeg, pulls a timestamped
+      transcript (native captions first, Whisper API fallback), and answers questions
+      about the content. Works with YouTube/URLs and local files.
+    examples:
+      - "Watch this YouTube video and summarize the demo" -> watch
+      - "/watch video.mp4 what tools does he use?" -> watch
+
+  - name: orugas-design-studio
+    folder: orugas-design-studio/
+    activation: null
+    category: integrations
+    triggers: ["haz una imagen", "genera una imagen", "make an image", "generate an image", "edit this image", "image variations", "aspect ratio image", "batch image generation"]
+    use_when: >
+      Generating or editing images with Google Gemini 3 (flash-image / pro-image) and
+      Imagen from the CLI, mirroring the Orugas Design Studio app — variations,
+      references, aspect-ratio control, batch generation, search grounding,
+      camera/lighting/style tweaks.
+    examples:
+      - "Haz una imagen de un pulpo astronauta, 16:9" -> orugas-design-studio
+      - "Generate 4 variations of this logo concept" -> orugas-design-studio
+
+  - name: seedance-animator
+    folder: seedance-animator/
+    activation: null
+    category: integrations
+    triggers: ["animate this story", "anime video", "Seedance", "character sheet", "storyboard video", "make an animation from this concept"]
+    use_when: >
+      Research-first anime/animation video pipeline on Replicate. Deep-researches the
+      story and visual references (story-researcher Agent 0), generates character
+      sheets, environment refs, and a narrative storyboard with Nano Banana 2, then
+      animates with Seedance 2.0. Saves to Story Teller project folders.
+    avoid_when: Single still images with no narrative/animation — use orugas-design-studio instead.
+    examples:
+      - "Turn this short story into an animated scene" -> seedance-animator
+      - "Make an anime clip of my character sailing at dawn" -> seedance-animator
+      - "Generate a podcast from my notebook" -> notebook-research
+
+  - name: oruga-blender
+    folder: oruga-blender/
+    activation: /oruga-blender
+    category: integrations
+    triggers: ["make a 3D asset", "modelo 3D de X para blender", "image to 3D", "imagen a 3D", "hazme un asset de X", "Hunyuan3D", "blender model"]
+    use_when: >
+      Image-to-3D asset pipeline for Blender. Generates candidate images with
+      Nano Banana 2 on Replicate, stops at a mandatory checkpoint for the user
+      to pick one, converts the chosen image into a textured mesh with
+      Hunyuan3D 3.1, and imports the GLB into Blender through the Blender MCP.
+      Every round is versioned under assets/<asset-name>/v0.N.
+    avoid_when: >
+      Flat images with no 3D output — use orugas-design-studio. Animation or
+      video — use seedance-animator. Realistic human heads — a FaceBuilder
+      sculpt beats Hunyuan for fine facial detail.
+    examples:
+      - "Hazme un modelo 3D de un robot vaquero para Blender" -> oruga-blender
+      - "Turn this concept image into a mesh I can import" -> oruga-blender
+      - "Generate 4 logo variations" -> orugas-design-studio
+
+  # ---------------------------------------------------------------------------
+  # WORKFLOWS / PIPELINES
+  # ---------------------------------------------------------------------------
+  - name: awake
+    folder: awake/
+    activation: /awake
+    category: workflows
+    triggers: ["awake", "wake up in project", "despierta en", "work inside project memory", "child session"]
+    use_when: From the father (Desktop) session, jumping INTO a project folder and waking up there — anchor to the project root, read its wiki, wake its MemPalace wing, adopt its CLAUDE.md. Uses the harness /arise built; father Mempire stays out of scope.
+    avoid_when: The project has no ARISE harness yet — run /arise first.
+    examples:
+      - "/awake my-project" -> awake
+      - "despierta en el proyecto Oasis" -> awake
+      - "work in Pym with its own memory" -> awake
+
+  - name: arise
+    folder: arise/
+    activation: /arise
+    category: workflows
+    triggers: ["awaken claude code", "memory harness", "build wiki", "karpathy wiki", "personal wiki", "laboral wiki", "mempalace harness"]
+    use_when: Awakening Claude Code for a project with a two-layer memory harness (Karpathy wiki + MemPalace), then layering the chosen mode wiki on top. Modes Personal, Laboral, or Harness-only.
+    examples:
+      - "Set up a personal wiki for this project" -> arise
+      - "Give this project real long-term memory" -> arise
+      - "Awaken Claude Code on this repo" -> arise
+
+  - name: arise-wiki
+    folder: arise-wiki/
+    activation: /arise-wiki
+    category: workflows
+    triggers: ["karpathy llm wiki", "knowledge base over sources", "ingest query lint", "wiki over documents"]
+    use_when: Building a pure Karpathy LLM Wiki over immutable sources (Ingest/Query/Lint, citations, conflict flagging). Layer 1 of /arise; runs standalone for research/book/competitor knowledge bases.
+    avoid_when: You need task tracking or verbatim recall. Use /arise (with a mode) or /arise-mempalace.
+    examples:
+      - "Build a knowledge base from these papers" -> arise-wiki
+      - "Make a wiki I can ask about my competitors" -> arise-wiki
+
+  - name: arise-mempalace
+    folder: arise-mempalace/
+    activation: /arise-mempalace
+    category: workflows
+    triggers: ["install mempalace", "verbatim memory", "mine claude sessions", "palace search", "ai memory hooks"]
+    use_when: Installing, wiring, and using MemPalace (github.com/mempalace/mempalace) for verbatim semantic recall: package install, palace init, official Claude Code plugin + hooks, backfill, search. Layer 2 of /arise; runs standalone.
+    examples:
+      - "Set up MemPalace for this project" -> arise-mempalace
+      - "Mine my past Claude sessions into searchable memory" -> arise-mempalace

@@ -1,0 +1,32 @@
+# Private source material (not a skill)
+seedance-Video/
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# appbuilder: local profile carries org names, never commit it
+appbuilder-profile.md
+appbuilder/PROFILE.local.md
+
+# never re-import
+node_modules/
+package-lock.json
+judge-charly/

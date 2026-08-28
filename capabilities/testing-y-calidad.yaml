@@ -1,0 +1,84 @@
+# Capabilities: Testing y Calidad de Codigo
+# Agregar a CLAUDE.md para que Claude active estos skills segun necesidad
+
+skills:
+  tdd-workflow:
+    nombre: "TDD Workflow"
+    categoria: "Testing"
+    capabilities:
+      - Flujo completo Test-Driven Development
+      - Ciclo Red-Green-Refactor
+      - Cobertura minima 80%
+      - Aplicable a cualquier lenguaje
+    activar_cuando:
+      - "Se pide desarrollo con TDD"
+      - "Se quiere escribir tests primero"
+      - "Se necesita mejorar cobertura"
+    requiere_confirmacion: true
+
+  e2e-testing:
+    nombre: "E2E Testing"
+    categoria: "Testing"
+    capabilities:
+      - Playwright para tests end-to-end
+      - Page Object Model
+      - Configuracion y CI/CD integration
+      - Manejo de artifacts
+      - Estrategias para tests flaky
+    activar_cuando:
+      - "Se escriben tests E2E"
+      - "Se configura Playwright"
+      - "Se diagnostican tests flaky E2E"
+    requiere_confirmacion: true
+
+  verification-loop:
+    nombre: "Verification Loop"
+    categoria: "Testing"
+    capabilities:
+      - Sistema de verificacion comprehensivo
+      - Validacion multi-paso
+      - Checklists automatizados
+      - Gate de calidad pre-merge
+    activar_cuando:
+      - "Se verifica calidad antes de merge"
+      - "Se ejecuta loop de verificacion"
+    requiere_confirmacion: true
+
+  bughunter:
+    nombre: "Bug Hunter"
+    categoria: "Testing"
+    capabilities:
+      - Analisis estatico de codigo
+      - Deteccion de vulnerabilidades comunes
+      - Code review contextual
+      - Patrones de bugs frecuentes
+    activar_cuando:
+      - "Se buscan bugs en el codigo"
+      - "Se hace revision de seguridad del codigo"
+    requiere_confirmacion: true
+
+  eval-harness:
+    nombre: "Eval Harness"
+    categoria: "Testing"
+    capabilities:
+      - Eval-Driven Development (EDD)
+      - Graders basados en codigo
+      - Graders basados en LLM
+      - Integration tests para evals
+    tools_requeridos: "Read, Write, Edit, Bash, Grep, Glob"
+    activar_cuando:
+      - "Se implementan evaluaciones de AI"
+      - "Se mide calidad de sesiones Claude"
+    requiere_confirmacion: true
+
+  plankton-code-quality:
+    nombre: "Plankton Code Quality"
+    categoria: "Testing"
+    capabilities:
+      - Formateo automatico en tiempo de escritura
+      - Linting via hooks
+      - Fixes con Claude en cada edicion
+    activar_cuando:
+      - "Se configura quality enforcement"
+      - "Se quiere auto-formateo en edicion"
+    requiere_confirmacion: true

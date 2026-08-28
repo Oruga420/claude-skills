@@ -1,0 +1,196 @@
+# Capabilities: AI y Agentes Autonomos
+# Agregar a CLAUDE.md para que Claude active estos skills segun necesidad
+
+skills:
+  agentic-engineering:
+    nombre: "Agentic Engineering"
+    categoria: "AI/Agentes"
+    capabilities:
+      - Ingenieria agentica con eval-first execution
+      - Descomposicion de tareas complejas
+      - Model routing por costo y complejidad
+    activar_cuando:
+      - "Se disenan sistemas agenticos"
+      - "Se implementa eval-first development"
+    requiere_confirmacion: true
+
+  ai-first-engineering:
+    nombre: "AI-First Engineering"
+    categoria: "AI/Agentes"
+    capabilities:
+      - Modelo operativo AI-first para equipos
+      - Estrategias donde AI genera gran parte del codigo
+      - Workflows de revision y supervision
+    activar_cuando:
+      - "Se establece modelo de trabajo AI-first"
+      - "Se disenan procesos de equipo con AI"
+    requiere_confirmacion: true
+
+  autonomous-loops:
+    nombre: "Autonomous Loops (deprecated)"
+    categoria: "AI/Agentes"
+    capabilities:
+      - Pipelines secuenciales con claude -p
+      - Loops autonomos multi-agente
+      - Patron RFC-driven DAG
+    nota: "Deprecado - usar continuous-agent-loop"
+    activar_cuando:
+      - "Se disenan loops autonomos"
+    requiere_confirmacion: true
+
+  continuous-agent-loop:
+    nombre: "Continuous Agent Loop"
+    categoria: "AI/Agentes"
+    capabilities:
+      - Loops autonomos continuos
+      - Quality gates y evaluaciones
+      - Controles de recovery
+      - Patrones de resiliencia
+    activar_cuando:
+      - "Se implementa loop continuo de agente"
+      - "Se necesitan quality gates en loops"
+    requiere_confirmacion: true
+
+  karpathy:
+    nombre: "Karpathy Research Loop"
+    categoria: "AI/Agentes"
+    trigger: "/karpathy"
+    capabilities:
+      - Loop de investigacion autonomo con 4 agentes
+      - Agentes Researcher, Executor, Analyst, Lead
+      - Optimizacion continua de metricas
+      - Dominios ML, web performance, ads, code quality
+      - Templates por dominio
+    activar_cuando:
+      - "Se necesita optimizacion iterativa de metricas"
+      - "Se hace investigacion experimental autonoma"
+    requiere_confirmacion: true
+
+  loop-builder:
+    nombre: "Loop Builder"
+    categoria: "AI/Agentes"
+    trigger: "/loop-builder"
+    capabilities:
+      - Entrevista guiada para disenar loops autonomos (5 rondas de preguntas)
+      - Scaffold de loops/<nombre>/README.md con el contrato del loop (Goal, Boundaries, SOP, State, Logs)
+      - Seleccion de trigger (for-loop continuo, cron, event-based, combo con gate script)
+      - Gate scripts para despertar al agente solo con trabajo real
+      - Tiers de evidencia del verifier y reglas via-negativa
+      - Sesiones evolve cada 5-10 runs para mejorar el loop mismo
+      - Diagramas originales del video + videos Remotion de flujo de datos
+    activar_cuando:
+      - "Se quiere un agente recurrente que trabaje solo"
+      - "Se disena un loop nuevo con contrato y guardrails"
+    requiere_confirmacion: true
+
+  long-running-harness:
+    nombre: "Long Running Harness"
+    categoria: "AI/Agentes"
+    capabilities:
+      - Harness multi-agente Planner-Generator-Evaluator
+      - Context resets automaticos
+      - Sprint contracts
+      - File-based handoffs
+      - QA calibrado
+    activar_cuando:
+      - "Se ejecutan tareas largas multi-agente"
+      - "Se necesita harness con context resets"
+    requiere_confirmacion: true
+
+  ralphinho-rfc-pipeline:
+    nombre: "Ralphinho RFC Pipeline"
+    categoria: "AI/Agentes"
+    capabilities:
+      - Descomposicion RFC-driven
+      - Quality gates y merge queues
+      - Orquestacion de work units
+      - 3 tiers de complejidad
+    activar_cuando:
+      - "Se orquestan cambios complejos multi-agente"
+      - "Se necesita pipeline RFC con quality gates"
+    requiere_confirmacion: true
+
+  cost-aware-llm-pipeline:
+    nombre: "Cost-Aware LLM Pipeline"
+    categoria: "AI/Agentes"
+    capabilities:
+      - Model routing por complejidad de tarea
+      - Budget tracking de API calls
+      - Retry logic optimizado
+      - Prompt caching
+    activar_cuando:
+      - "Se optimizan costos de API LLM"
+      - "Se implementa model routing"
+    requiere_confirmacion: true
+
+  agent-harness-construction:
+    nombre: "Agent Harness Construction"
+    categoria: "AI/Agentes"
+    capabilities:
+      - Diseno de action spaces para agentes
+      - Definicion de herramientas
+      - Formateo de observaciones
+      - Optimizacion de completion rates
+    activar_cuando:
+      - "Se construye harness para agentes AI"
+      - "Se disenan tool definitions"
+    requiere_confirmacion: true
+
+  enterprise-agent-ops:
+    nombre: "Enterprise Agent Ops"
+    categoria: "AI/Agentes"
+    capabilities:
+      - Operacion de workloads de agentes en produccion
+      - Observabilidad de agentes
+      - Security boundaries
+      - Lifecycle management
+    activar_cuando:
+      - "Se despliegan agentes en enterprise"
+      - "Se configura observabilidad de agentes"
+    requiere_confirmacion: true
+
+  continuous-learning:
+    nombre: "Continuous Learning"
+    categoria: "AI/Agentes"
+    capabilities:
+      - Extraccion automatica de patrones de sesiones
+      - Guardado como skills aprendidos
+      - Reutilizacion en sesiones futuras
+    activar_cuando:
+      - "Se quiere aprender de sesiones pasadas"
+    requiere_confirmacion: true
+
+  continuous-learning-v2:
+    nombre: "Continuous Learning v2"
+    categoria: "AI/Agentes"
+    version: "2.1.0"
+    capabilities:
+      - Sistema de instincts con confidence scoring
+      - Observacion via hooks
+      - Evolucion de instincts a skills/commands/agents
+      - Project-scoped instincts (evita contaminacion cross-project)
+    activar_cuando:
+      - "Se implementa aprendizaje continuo v2"
+      - "Se configuran instincts por proyecto"
+    requiere_confirmacion: true
+
+  iterative-retrieval:
+    nombre: "Iterative Retrieval"
+    categoria: "AI/Agentes"
+    capabilities:
+      - Refinamiento progresivo de contexto
+      - Solucion al problema de contexto en subagentes
+    activar_cuando:
+      - "Se resuelve problema de contexto en subagentes"
+    requiere_confirmacion: true
+
+  strategic-compact:
+    nombre: "Strategic Compact"
+    categoria: "AI/Agentes"
+    capabilities:
+      - Compactacion manual de contexto en intervalos logicos
+      - Preservacion de contexto entre fases de tarea
+    activar_cuando:
+      - "Se necesita compactar contexto manualmente"
+      - "Se trabaja en tareas largas con multiples fases"
+    requiere_confirmacion: true

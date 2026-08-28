@@ -1,0 +1,63 @@
+# Secrets / credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+credentials.json
+replicate_token*
+*secret*
+*token*
+!agents/*token*.md
+
+# Run outputs (generated locally, can be huge)
+seedance_run_*/
+**/seedance_run_*/
+*.mp4
+*.mov
+*.webm
+*.gif
+
+# Generated assets inside the skill (if user runs from here)
+characters/
+style/
+storyboard/
+video/
+prompt/seedance_prompt.md
+prompt/refs.json
+run_state.json
+
+# Wiki + instincts may contain private concepts — keep local
+wiki/runs.md
+INSTINCTS.md
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node (in case helpers are added later)
+node_modules/
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*~
+
+# Temp
+*.tmp
+*.log
+*.bak

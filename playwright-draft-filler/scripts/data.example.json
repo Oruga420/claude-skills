@@ -1,0 +1,11 @@
+{
+  "title": "My draft post title",
+  "description": "Long-form description that goes into the body field. Replace this with whatever your form expects.",
+  "tags": ["example", "draft", "playwright"],
+  "category": "general",
+  "featured": false,
+  "metadata": {
+    "author": "Jane Doe",
+    "language": "en"
+  }
+}

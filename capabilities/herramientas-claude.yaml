@@ -1,0 +1,186 @@
+# Capabilities: Herramientas Claude Code y Utilidades
+# Agregar a CLAUDE.md para que Claude active estos skills segun necesidad
+
+skills:
+  nanoclaw-repl:
+    nombre: "NanoClaw REPL"
+    categoria: "Claude Tooling"
+    capabilities:
+      - REPL session-aware basado en claude -p
+      - Zero dependencies
+      - Ejecucion interactiva de comandos
+    activar_cuando:
+      - "Se usa NanoClaw REPL"
+      - "Se necesita REPL de Claude"
+    requiere_confirmacion: true
+
+  session-insights:
+    nombre: "Session Insights"
+    categoria: "Claude Tooling"
+    capabilities:
+      - Analisis de historial de sesiones
+      - Insights de uso
+      - Analisis de friccion
+      - Sugerencias personalizadas
+    activar_cuando:
+      - "Se analizan sesiones anteriores"
+      - "Se buscan patrones de uso"
+    requiere_confirmacion: true
+
+  logit:
+    nombre: "Log It"
+    categoria: "Claude Tooling"
+    trigger: "/logit"
+    capabilities:
+      - Log de trabajo por sesion en ~/.claude/logit/YYYY-MM-DD.md + memoria (Mempire o MemPalace segun sesion)
+      - Path 1 (tarea simple) - una entrada al completar la tarea
+      - Path 2 (tarea compleja) - /ultraplan, log del plan, go/no-go, entrada por cada punto completado y cierre
+      - Rules contract - solo trabajo (nunca personal), preguntar una vez por sesion si se activa
+    activar_cuando:
+      - "El usuario dice /logit o pide loggear el trabajo"
+      - "Arranca una tarea de trabajo nueva y no se ha ofrecido logging en la sesion"
+    requiere_confirmacion: true
+
+  livetrack:
+    nombre: "Live Track"
+    categoria: "Claude Tooling"
+    trigger: "/livetrack"
+    capabilities:
+      - Board de avance en vivo para un proyecto, ticket o tarea - HTML autorecargable cada 10s + estado en JSON
+      - Barra de progreso por tarea, mas que es la tarea, que significa terminada y como se verifico
+      - Registra en el momento - tarea iniciada, tarea terminada, decision tomada, bloqueo, desbloqueo
+      - Seccion "necesita al operador" para preguntas que solo el puede responder (el board no reemplaza preguntar en el chat)
+      - Todo se muta por scripts/livetrack.py - nunca editar a mano el json ni el html
+      - livetrack.py show reconstruye el estado en cuatro lineas, el camino de recuperacion tras una compactacion
+    activar_cuando:
+      - "El usuario dice /livetrack, trackea esto, track this ticket, quiero ver el avance en vivo"
+      - "Entrega un ticket o tarea y quiere verlo moverse mientras Claude trabaja"
+    no_activar_cuando:
+      - "Se quiere el snapshot durable por breakpoint - eso es /projectstatus"
+      - "Se quiere la bitacora cronologica de lo hecho - eso es /logit"
+    requiere_confirmacion: true
+
+  configure-ecc:
+    nombre: "Configure ECC"
+    categoria: "Claude Tooling"
+    capabilities:
+      - Instalador interactivo de skills
+      - Guia de seleccion de skills y rules
+      - Instalacion a nivel usuario o proyecto
+    activar_cuando:
+      - "Se instalan skills de ECC"
+      - "Se configura Claude Code con skills"
+    requiere_confirmacion: true
+
+  skill-shed:
+    nombre: "Skill Shed"
+    categoria: "Claude Tooling"
+    capabilities:
+      - Busqueda de skills en repo GitHub
+      - Fallback cuando skills locales no cubren el dominio
+    activar_cuando:
+      - "No se encuentra skill local adecuado"
+      - "Se buscan skills adicionales"
+    requiere_confirmacion: true
+
+  skill-stocktake:
+    nombre: "Skill Stocktake"
+    categoria: "Claude Tooling"
+    capabilities:
+      - Auditoria de calidad de skills
+      - Quick Scan de skills modificados
+      - Full Stocktake completo
+    activar_cuando:
+      - "Se audita calidad de skills instalados"
+    requiere_confirmacion: true
+
+  psmux:
+    nombre: "PSMux Terminal Multiplexer"
+    categoria: "Claude Tooling"
+    capabilities:
+      - Toggle de split panes para Agent Teams
+      - Terminal multiplexer para Claude Code
+    activar_cuando:
+      - "Se trabaja con agent teams"
+      - "Se necesitan split panes"
+    requiere_confirmacion: true
+
+  arise:
+    nombre: "Arise Wiki"
+    categoria: "Claude Tooling"
+    capabilities:
+      - Bootstrap de wiki Karpathy-style persistente
+      - Modo Personal (task tracking con carry-over)
+      - Modo Laboral (proyectos, PRDs, transcripts)
+    activar_cuando:
+      - "Se crea wiki de conocimiento persistente"
+      - "Se necesita tracking de tareas con contexto"
+    requiere_confirmacion: true
+
+  search-first:
+    nombre: "Search First"
+    categoria: "Claude Tooling"
+    capabilities:
+      - Workflow research-before-coding
+      - Buscar herramientas y librerias existentes antes de escribir codigo
+    activar_cuando:
+      - "Antes de implementar algo desde cero"
+      - "Se buscan soluciones existentes"
+    requiere_confirmacion: true
+
+  content-hash-cache-pattern:
+    nombre: "Content Hash Cache"
+    categoria: "Patterns"
+    capabilities:
+      - Cache basado en SHA-256 content hashes
+      - Path-independent y auto-invalidating
+      - Separacion en service layer
+    activar_cuando:
+      - "Se implementa cache de procesamiento de archivos"
+      - "Se necesita cache content-addressable"
+    requiere_confirmacion: true
+
+  regex-vs-llm-structured-text:
+    nombre: "Regex vs LLM Decision"
+    categoria: "Patterns"
+    capabilities:
+      - Framework de decision regex vs LLM
+      - Empezar con regex, agregar LLM para edge cases
+    activar_cuando:
+      - "Se parsea texto estructurado"
+      - "Se decide entre regex y LLM"
+    requiere_confirmacion: true
+
+  onboard:
+    nombre: "Employee Onboarding"
+    categoria: "Operations"
+    capabilities:
+      - Crear cuenta Google Workspace
+      - Provisionar Slack via SCIM
+      - Enviar welcome email
+    activar_cuando:
+      - "Se hace onboarding de empleado"
+    requiere_confirmacion: true
+
+  visa-doc-translate:
+    nombre: "Visa Document Translate"
+    categoria: "Operations"
+    capabilities:
+      - Traducir documentos de visa a ingles
+      - Crear PDF bilingue con original y traduccion
+    activar_cuando:
+      - "Se traducen documentos de visa"
+    requiere_confirmacion: true
+
+  nutrient-document-processing:
+    nombre: "Nutrient Document Processing"
+    categoria: "Operations"
+    capabilities:
+      - Procesar, convertir y OCR documentos
+      - Extraer, redactar, firmar y llenar formularios
+      - Soporte PDF, DOCX, XLSX, PPTX, HTML, imagenes
+      - API Nutrient DWS
+    activar_cuando:
+      - "Se procesan documentos con Nutrient API"
+      - "Se convierte entre formatos de documento"
+    requiere_confirmacion: true

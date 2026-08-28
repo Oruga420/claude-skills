@@ -1,0 +1,34 @@
+# Capabilities: C++
+# Agregar a CLAUDE.md para que Claude active estos skills segun necesidad
+
+skills:
+  cpp-coding-standards:
+    nombre: "C++ Coding Standards"
+    categoria: "C++"
+    capabilities:
+      - C++ Core Guidelines
+      - Modern C++ idioms (C++17/20)
+      - RAII y smart pointers
+      - Const correctness
+      - Move semantics
+      - Template best practices
+    activar_cuando:
+      - "Se escribe codigo C++ nuevo"
+      - "Se revisa o refactoriza C++"
+      - "Se aplican Core Guidelines"
+    requiere_confirmacion: true
+
+  cpp-testing:
+    nombre: "C++ Testing"
+    categoria: "C++"
+    capabilities:
+      - GoogleTest framework
+      - CTest configuracion
+      - Diagnostico de tests fallidos o flaky
+      - Sanitizers (ASan, TSan, UBSan)
+      - Cobertura de codigo
+    activar_cuando:
+      - "Se escriben tests C++"
+      - "Se configura GoogleTest o CTest"
+      - "Se diagnostican tests flaky"
+    requiere_confirmacion: true

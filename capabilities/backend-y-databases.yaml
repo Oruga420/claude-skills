@@ -1,0 +1,107 @@
+# Capabilities: Backend y Databases
+# Agregar a CLAUDE.md para que Claude active estos skills segun necesidad
+
+skills:
+  api-design:
+    nombre: "API Design"
+    categoria: "Backend"
+    capabilities:
+      - Disenar APIs REST con naming de recursos correcto
+      - Seleccionar status codes HTTP apropiados
+      - Implementar paginacion y filtrado
+      - Disenar respuestas de error consistentes
+      - Configurar versionado de API
+      - Implementar rate limiting
+    activar_cuando:
+      - "Se crea un endpoint nuevo"
+      - "Se disenan contratos de API"
+      - "Se revisan respuestas HTTP"
+    requiere_confirmacion: true
+
+  backend-patterns:
+    nombre: "Backend Patterns"
+    categoria: "Backend"
+    capabilities:
+      - Arquitectura Node.js/Express en capas
+      - Patrones de middleware y error handling
+      - Optimizacion de consultas y conexiones
+      - Patrones Next.js API routes
+      - Manejo de autenticacion y sesiones
+    activar_cuando:
+      - "Se trabaja en servidor Node.js o Express"
+      - "Se crean API routes en Next.js"
+      - "Se refactoriza backend JavaScript/TypeScript"
+    requiere_confirmacion: true
+
+  postgres-patterns:
+    nombre: "PostgreSQL Patterns"
+    categoria: "Database"
+    capabilities:
+      - Optimizacion de queries SQL
+      - Diseno de esquemas y normalizacion
+      - Estrategias de indexacion
+      - Seguridad y permisos de base de datos
+      - Patrones basados en Supabase
+    activar_cuando:
+      - "Se escriben queries PostgreSQL"
+      - "Se disenan tablas o esquemas"
+      - "Se optimiza rendimiento de BD"
+    requiere_confirmacion: true
+
+  clickhouse-io:
+    nombre: "ClickHouse Patterns"
+    categoria: "Database"
+    capabilities:
+      - Patrones de queries analiticas
+      - Optimizacion para workloads OLAP
+      - Data engineering y pipelines
+      - Diseno de tablas columnares
+    activar_cuando:
+      - "Se trabaja con ClickHouse"
+      - "Se disenan pipelines analiticos"
+    requiere_confirmacion: true
+
+  database-migrations:
+    nombre: "Database Migrations"
+    categoria: "Database"
+    capabilities:
+      - Migraciones de esquema seguras
+      - Migraciones de datos
+      - Estrategias de rollback
+      - Zero-downtime deployments
+      - Soporte PostgreSQL, MySQL y ORMs comunes
+    activar_cuando:
+      - "Se crean migraciones de base de datos"
+      - "Se modifican esquemas en produccion"
+      - "Se planifica rollback de BD"
+    requiere_confirmacion: true
+
+  docker-patterns:
+    nombre: "Docker Patterns"
+    categoria: "Infrastructure"
+    capabilities:
+      - Dockerfiles optimizados multi-stage
+      - Docker Compose para desarrollo local
+      - Seguridad de contenedores
+      - Networking entre servicios
+      - Estrategias de volumenes
+    activar_cuando:
+      - "Se crea o modifica Dockerfile"
+      - "Se configura Docker Compose"
+      - "Se despliega con contenedores"
+    requiere_confirmacion: true
+
+  deployment-patterns:
+    nombre: "Deployment Patterns"
+    categoria: "Infrastructure"
+    capabilities:
+      - Diseno de pipelines CI/CD
+      - Containerizacion con Docker
+      - Health checks y readiness probes
+      - Estrategias de rollback
+      - Checklists de produccion
+    activar_cuando:
+      - "Se configura CI/CD"
+      - "Se prepara deployment a produccion"
+      - "Se crean health checks"
+    requiere_confirmacion: true

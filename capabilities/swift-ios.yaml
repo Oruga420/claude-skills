@@ -1,0 +1,89 @@
+# Capabilities: Swift e iOS
+# Agregar a CLAUDE.md para que Claude active estos skills segun necesidad
+
+skills:
+  swiftui-patterns:
+    nombre: "SwiftUI Patterns"
+    categoria: "iOS"
+    capabilities:
+      - Arquitectura SwiftUI
+      - State management con @Observable
+      - Composicion de vistas
+      - Navegacion moderna (NavigationStack)
+      - Optimizacion de rendimiento
+      - Property wrappers (@State, @Binding, @Environment)
+    activar_cuando:
+      - "Se desarrolla UI con SwiftUI"
+      - "Se maneja estado en SwiftUI"
+      - "Se optimiza rendimiento de vistas"
+    requiere_confirmacion: true
+
+  swift-concurrency-6-2:
+    nombre: "Swift 6.2 Concurrency"
+    categoria: "iOS"
+    capabilities:
+      - Approachable Concurrency (Swift 6.2)
+      - Single-threaded por defecto
+      - "@concurrent para background offloading"
+      - Async/await patterns
+      - Actor isolation
+    activar_cuando:
+      - "Se implementa concurrencia en Swift"
+      - "Se migra a Swift 6.2"
+      - "Se trabaja con async/await"
+    requiere_confirmacion: true
+
+  swift-actor-persistence:
+    nombre: "Swift Actor Persistence"
+    categoria: "iOS"
+    capabilities:
+      - Persistencia thread-safe con actors
+      - Cache in-memory con file-backed storage
+      - Eliminacion de data races by design
+    activar_cuando:
+      - "Se implementa persistencia con actors"
+      - "Se necesita cache thread-safe"
+    requiere_confirmacion: true
+
+  swift-protocol-di-testing:
+    nombre: "Swift Protocol DI"
+    categoria: "iOS"
+    capabilities:
+      - Dependency injection con protocolos
+      - Mocking de file system y network
+      - Testing de APIs externas
+      - Protocolos focalizados
+    activar_cuando:
+      - "Se implementa DI en Swift"
+      - "Se crean mocks para testing"
+      - "Se testean dependencias externas"
+    requiere_confirmacion: true
+
+  foundation-models-on-device:
+    nombre: "Foundation Models On-Device"
+    categoria: "iOS"
+    capabilities:
+      - Apple FoundationModels framework
+      - Generacion de texto on-device
+      - Guided generation con @Generable
+      - Tool calling en iOS 26+
+      - Snapshot streaming
+    activar_cuando:
+      - "Se integra LLM on-device en iOS"
+      - "Se usa FoundationModels framework"
+      - "Se desarrolla para iOS 26+"
+    requiere_confirmacion: true
+
+  liquid-glass-design:
+    nombre: "Liquid Glass Design"
+    categoria: "iOS"
+    capabilities:
+      - Sistema de diseno Liquid Glass (iOS 26)
+      - Material de vidrio dinamico con blur y refleccion
+      - Morphing interactivo
+      - Implementacion en SwiftUI, UIKit y WidgetKit
+    activar_cuando:
+      - "Se disenan interfaces Liquid Glass"
+      - "Se desarrolla para iOS 26"
+      - "Se implementan efectos de vidrio"
+    requiere_confirmacion: true
