@@ -175,6 +175,7 @@ Persistent, compounding knowledge bases powered by LLMs. Inspired by [Karpathy's
 |-------|-------------|
 | [seedance-animator](./seedance-animator/) | Interactive anime video pipeline via Replicate — Nano Banana 2 for character sheets/style/storyboard, Seedance 2 or Seedance 2 Lite for animation. Multi-agent orchestration with /arise + /karpathy + /ralphinho-rfc-pipeline improvement loops |
 | [oruga-blender](./oruga-blender/) | Image-to-3D asset pipeline for Blender — Nano Banana 2 generates candidate images on Replicate, you pick one at a mandatory checkpoint, Hunyuan3D 3.1 turns it into a textured mesh, and the Blender MCP imports it. Versioned output per generation round |
+| [ruche](./ruche/) | Explains the current Claude Code conversation as a narrated video: Remotion render, Krea 2 images on the local GPU (free) or gpt-image via Replicate when a plate needs readable text, ElevenLabs voice-over plus optional music and SFX, hard 1 USD budget cap |
 
 ### Claude Code Tooling
 
