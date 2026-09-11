@@ -2,6 +2,18 @@
 # Agregar a CLAUDE.md para que Claude active estos skills segun necesidad
 
 skills:
+  astra-gateway:
+    nombre: "Astra Gateway"
+    categoria: "Claude Tooling"
+    capabilities:
+      - Install and verify Astra through Eigenwise Model Gateway
+      - Configure an explicitly selected working root
+      - Diagnose resumed-session routing and verify rollback
+    activar_cuando:
+      - "Install Astra in Claude Code"
+      - "Astra is selected but a resumed conversation cannot use it"
+    requiere_confirmacion: true
+
   nanoclaw-repl:
     nombre: "NanoClaw REPL"
     categoria: "Claude Tooling"

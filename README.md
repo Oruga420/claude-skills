@@ -48,6 +48,7 @@ Persistent, compounding knowledge bases powered by LLMs. Inspired by [Karpathy's
 
 | Skill | Description |
 |-------|-------------|
+| [astra-gateway](./astra-gateway/) | Install Astra in Claude Code through a loopback gateway, verify project-root routing, and troubleshoot resumed conversations |
 | [agent-harness-construction](./agent-harness-construction/) | Design and optimize AI agent action spaces, tool definitions, and observation formatting for higher completion rates |
 | [agentic-engineering](./agentic-engineering/) | Operate as an agentic engineer using eval-first execution, decomposition, and cost-aware model routing |
 | [ai-first-engineering](./ai-first-engineering/) | Engineering operating model for teams where AI agents generate a large share of implementation output |

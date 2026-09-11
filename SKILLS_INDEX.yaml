@@ -1094,3 +1094,11 @@ skills:
     examples:
       - "Set up MemPalace for this project" -> arise-mempalace
       - "Mine my past Claude sessions into searchable memory" -> arise-mempalace
+
+  - name: astra-gateway
+    folder: astra-gateway/
+    activation: /astra-gateway
+    category: tooling
+    triggers: ["install Astra in Claude Code", "Astra gateway", "resumed session model unavailable"]
+    use_when: Installing Astra through Model Gateway or diagnosing routing for a selected working root.
+    avoid_when: Configuring LAN access or changing organization policies.
