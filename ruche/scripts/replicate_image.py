@@ -2,7 +2,7 @@
 
 Krea 2 cannot spell. When a scene image must carry readable text (a label, a UI, a sign),
 the orchestrator routes it here. Token resolution: REPLICATE_API_TOKEN env, <skill>/.env,
-~/.claude/skills/oruga-blender/.env. Only the variable NAME is logged, never its value.
+nothing else. Only the variable NAME is logged, never its value.
 Model slug override: RUCHE_TEXT_IMAGE_MODEL (default openai/gpt-image-2).
 """
 from __future__ import annotations
@@ -19,13 +19,15 @@ DEFAULT_MODEL = "openai/gpt-image-2"
 # Replicate list price for gpt-image low quality is around 2 cents per image; used only
 # for the budget estimate. Override with RUCHE_TEXT_IMAGE_USD.
 USD_PER_IMAGE = float(os.environ.get("RUCHE_TEXT_IMAGE_USD", "0.03"))
+# Plate quality. Kept at low by default because that is what the cost estimate assumes.
+QUALITY = os.environ.get("RUCHE_TEXT_IMAGE_QUALITY", "low")
 
 
 def resolve_token() -> str | None:
     tok = os.environ.get("REPLICATE_API_TOKEN")
     if tok:
         return tok.strip()
-    for env_file in (SKILL / ".env", Path.home() / ".claude" / "skills" / "oruga-blender" / ".env"):
+    for env_file in (SKILL / ".env",):
         if not env_file.exists():
             continue
         for line in env_file.read_text(encoding="utf-8", errors="replace").splitlines():
@@ -51,8 +53,8 @@ def generate(prompt: str, dest: Path, tok: str, model: str | None = None) -> Non
     model = model or os.environ.get("RUCHE_TEXT_IMAGE_MODEL", DEFAULT_MODEL)
     url = f"https://api.replicate.com/v1/models/{model}/predictions"
     attempts = [
-        {"prompt": prompt, "quality": "low", "aspect_ratio": "3:2", "output_format": "png"},
-        {"prompt": prompt, "quality": "low"},
+        {"prompt": prompt, "quality": QUALITY, "aspect_ratio": "3:2", "output_format": "png"},
+        {"prompt": prompt, "quality": QUALITY},
         {"prompt": prompt},
     ]
     pred = None

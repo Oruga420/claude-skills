@@ -11,6 +11,7 @@ import {
 } from 'remotion';
 import {Scene, Spec} from '../types';
 import {theme, useIn, useSceneFade} from '../ui';
+import {PaperRuche} from '../paper/PaperRuche';
 
 const KIND_LABEL: Record<string, string> = {
   title: '',
@@ -192,7 +193,11 @@ const SceneShell: React.FC<{spec: Spec; scene: Scene}> = ({spec, scene}) => {
   );
 };
 
-export const Ruche: React.FC<{spec: Spec}> = ({spec}) => {
+/** Style switch: 'papel' (default) is the paper-and-ink motion system, 'cine' the original look. */
+export const Ruche: React.FC<{spec: Spec}> = ({spec}) =>
+  spec.style === 'cine' ? <CineRuche spec={spec} /> : <PaperRuche spec={spec} />;
+
+const CineRuche: React.FC<{spec: Spec}> = ({spec}) => {
   const {durationInFrames} = useVideoConfig();
   return (
     <AbsoluteFill style={{backgroundColor: theme.bg0}}>

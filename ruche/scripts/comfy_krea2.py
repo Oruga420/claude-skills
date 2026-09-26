@@ -1,6 +1,6 @@
-"""Local Krea 2 Turbo text-to-image through the ComfyUI HTTP API (RTX 5060, $0 per image).
+"""Local Krea 2 Turbo text-to-image through the ComfyUI HTTP API ($0 per image).
 
-Graph mirrors user/default/workflows/ConfyFlows/SFW/SFW 1.json converted to API format:
+Graph, in ComfyUI API format:
 UNETLoader(nvfp4) + CLIPLoader(krea2) + VAELoader -> CLIPTextEncode -> ConditioningZeroOut
 as negative -> KSampler 8 steps CFG 1 euler simple -> VAEDecode -> SaveImage.
 CFG 1 means negatives are ignored: steer style in the positive prompt only.
@@ -8,6 +8,7 @@ CFG 1 means negatives are ignored: steer style in the positive prompt only.
 from __future__ import annotations
 
 import json
+import os
 import random
 import time
 import urllib.error
@@ -50,7 +51,8 @@ def _graph(prompt: str, width: int, height: int, seed: int) -> dict:
     }
 
 
-def generate(prompt: str, dest: Path, width: int = 1344, height: int = 768, timeout: float = 240) -> None:
+def generate(prompt: str, dest: Path, width: int = 1344, height: int = 768,
+             timeout: float = float(os.environ.get("RUCHE_COMFY_TIMEOUT", "240"))) -> None:
     """Queue one image, wait for it, download it to dest (png)."""
     seed = random.randint(1, 2**31)
     body = json.dumps({"prompt": _graph(prompt, width, height, seed), "client_id": "ruche"}).encode()
