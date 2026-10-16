@@ -148,7 +148,6 @@ Persistent, compounding knowledge bases powered by LLMs. Inspired by [Karpathy's
 | [verification-loop](./verification-loop/) | A comprehensive verification system for Claude Code sessions |
 | [bughunter](./bughunter/) | Systematically hunt for bugs using static analysis patterns, vulnerability checks, and contextual code review |
 | [final-review](./final-review/) | Chain bughunter + security-scan + security-review, adversarially verify every finding, and emit one severity-ranked HTML report |
-| [buzz-it](./buzz-it/) | Ask another laptop's Claude Code agent for something over the Buzz relay and bring back its reply |
 
 ### Security
 

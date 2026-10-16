@@ -21,7 +21,7 @@
 
 meta:
   version: 1
-  total_skills: 99
+  total_skills: 98
   maintainer: Oruga420
   read_before_use: true
   tip: >
@@ -666,17 +666,6 @@ skills:
       - "Run a full security and bug audit and give me an HTML report" -> final-review
       - "/final-review the changes before I publish" -> final-review
 
-  - name: buzz-it
-    folder: buzz-it/
-    activation: /buzz-it
-    category: agents-harness
-    triggers: ["buzz-it", "pedile a", "preguntale al agente", "necesito este file de", "ask the other laptop"]
-    use_when: Asking another laptop's Claude Code agent for something over the Buzz relay and bringing back its reply.
-    avoid_when: The work can be done on this machine — a mention wakes a real remote session.
-    examples:
-      - "/buzz-it <agent-name> pasame el ultimo ultraplan" -> buzz-it
-      - "pedile a <otro-agente> que corra los tests" -> buzz-it
-
   - name: docker-patterns
     folder: docker-patterns/
     activation: null
@@ -868,7 +857,6 @@ skills:
     use_when: Onboarding a new employee at your company (Google + Slack + welcome email).
     examples:
       - "Onboard new hire Maria" -> onboard
-
 
   - name: visa-doc-translate
     folder: visa-doc-translate/
