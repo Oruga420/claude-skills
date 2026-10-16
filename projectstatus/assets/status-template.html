@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{PROJECT}} &mdash; Project status</title>
+<!-- This template is deliberately pure ASCII: every dash, dot and arrow is an HTML entity or a
+     CSS escape. Windows PowerShell 5.1 reads a UTF-8 file with no BOM as ANSI, so a naive
+     Get-Content/Set-Content fill turns real em dashes into mojibake. ASCII cannot be mangled.
+     Keep it that way - if you add a symbol, add it as an entity. -->
+<style>
+  :root {
+    --bg: #f6f7f9; --panel: #ffffff; --ink: #1a2233; --muted: #5c6675;
+    --line: #dde1e7; --accent: #2f5fd0; --accent-soft: #e8eefb;
+    --ok: #1d7a3e; --warn: #b26a00; --bad: #b3261e; --crit: #7a1414;
+    --ok-bg: #e5f3ea; --warn-bg: #fdf1dd; --bad-bg: #fbe7e6; --crit-bg: #f3dcdc;
+    --code-bg: #f0f2f5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14171c; --panel: #1d2129; --ink: #e6e9ee; --muted: #9aa3b0;
+      --line: #313743; --accent: #7ea2f0; --accent-soft: #232c40;
+      --ok: #6fce93; --warn: #e6b566; --bad: #ef8f89; --crit: #f0b3b3;
+      --ok-bg: #1c2f23; --warn-bg: #332a1a; --bad-bg: #38201e; --crit-bg: #3d2323;
+      --code-bg: #161a20;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.55 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  header {
+    background: var(--panel); border-bottom: 1px solid var(--line);
+    padding: 22px 28px; position: sticky; top: 0; z-index: 10;
+  }
+  header h1 { margin: 0 0 4px; font-size: 21px; }
+  .phase { color: var(--ink); font-size: 14px; margin-top: 2px; }
+  .status {
+    display: inline-block; margin-top: 8px; padding: 3px 12px; border-radius: 99px;
+    font-size: 13px; font-weight: 600;
+    background: var(--warn-bg); color: var(--warn);
+  }
+  .status.green  { background: var(--ok-bg);   color: var(--ok); }
+  .status.yellow { background: var(--warn-bg); color: var(--warn); }
+  .status.red    { background: var(--bad-bg);  color: var(--bad); }
+  .meta { color: var(--muted); font-size: 13px; margin-top: 6px; }
+  .wrap { display: flex; gap: 26px; max-width: 1200px; margin: 26px auto; padding: 0 24px; align-items: flex-start; }
+  nav {
+    position: sticky; top: 128px; flex: 0 0 220px; font-size: 13.5px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px;
+  }
+  nav a { display: block; color: var(--muted); text-decoration: none; padding: 5px 8px; border-radius: 6px; }
+  nav a.active, nav a:hover { color: var(--accent); background: var(--accent-soft); }
+  nav .tools { margin-top: 10px; border-top: 1px solid var(--line); padding-top: 10px; }
+  nav button {
+    font: inherit; font-size: 12.5px; color: var(--muted); background: none;
+    border: 1px solid var(--line); border-radius: 6px; padding: 3px 9px; margin: 2px 2px 0 0; cursor: pointer;
+  }
+  main { flex: 1; min-width: 0; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 18px; }
+  .tile { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .tile b { display: block; font-size: 24px; }
+  .tile span { color: var(--muted); font-size: 12.5px; }
+  details.panel {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px; margin-bottom: 14px;
+  }
+  details.panel summary {
+    list-style: none; cursor: pointer; padding: 14px 18px; display: flex; gap: 12px; align-items: baseline;
+  }
+  details.panel summary::-webkit-details-marker { display: none; }
+  summary .num {
+    flex: 0 0 auto; background: var(--accent-soft); color: var(--accent);
+    font-weight: 700; font-size: 12.5px; border-radius: 6px; padding: 2px 8px;
+  }
+  summary .t { font-weight: 650; }
+  summary .preview { color: var(--muted); font-size: 13px; flex: 1; text-align: right; }
+  details[open] summary .preview { display: none; }
+  .body { padding: 4px 20px 18px; border-top: 1px solid var(--line); overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 14px; }
+  th, td { border: 1px solid var(--line); padding: 7px 11px; text-align: left; vertical-align: top; }
+  th { background: var(--code-bg); }
+  pre {
+    background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px;
+    padding: 14px; overflow-x: auto; font-size: 13px; line-height: 1.5;
+  }
+  code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
+  .badge { display: inline-block; padding: 1px 9px; border-radius: 99px; font-size: 12px; font-weight: 600; }
+  .badge.low  { background: var(--ok-bg);   color: var(--ok); }
+  .badge.med  { background: var(--warn-bg); color: var(--warn); }
+  .badge.high { background: var(--bad-bg);  color: var(--bad); }
+  .badge.crit { background: var(--crit-bg); color: var(--crit); }
+  .rec { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 10px 0; }
+  ul.tight { padding-left: 20px; margin: 8px 0; }
+  ul.tight li { margin: 4px 0; }
+  ul.next { list-style: none; padding-left: 4px; }
+  /* \2192 is a right arrow. CSS escape, not a literal glyph - see the ASCII note above. */
+  ul.next li::before { content: "\2192  "; color: var(--accent); font-weight: 700; }
+  .blocker { border-left: 3px solid var(--bad); background: var(--bad-bg); padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 10px 0; }
+  .entry { border-top: 1px solid var(--line); padding: 12px 0 2px; }
+  .entry:first-child { border-top: none; }
+  .entry h4 { margin: 0 0 6px; font-size: 14.5px; }
+  .entry dl { margin: 0; display: grid; grid-template-columns: 84px 1fr; gap: 2px 10px; font-size: 13.5px; }
+  .entry dt { color: var(--muted); }
+  .entry dd { margin: 0; }
+  footer { color: var(--muted); font-size: 12.5px; padding: 8px 4px 40px; border-top: 1px solid var(--line); margin-top: 24px; }
+  @media print {
+    nav, .tools { display: none; }
+    details.panel { border: none; }
+    body { background: #fff; }
+  }
+  @media (max-width: 900px) { .wrap { flex-direction: column; } nav { position: static; width: 100%; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>{{PROJECT}} &mdash; Project status</h1>
+  <!-- PHASE: one line, what stage the project is actually in right now. -->
+  <div class="phase">{{PHASE}}</div>
+  <!-- HEALTH: swap the class to green | yellow | red. The text carries the REASON, e.g.
+       "yellow - deploy blocked on missing credentials". Blocked work is never green. -->
+  <span class="status {{HEALTH_CLASS}}">{{HEALTH}}</span>
+  <div class="meta">Project status &middot; updated {{DATE}} &middot; {{N_BREAKPOINTS}} breakpoints recorded</div>
+</header>
+
+<div class="wrap">
+<nav id="toc">
+  <a href="#s1">1 &middot; Where it stands</a>
+  <a href="#s2">2 &middot; Next</a>
+  <a href="#s3">3 &middot; Done</a>
+  <a href="#s4">4 &middot; Blocked</a>
+  <a href="#s5">5 &middot; Decisions</a>
+  <a href="#s6">6 &middot; Breakpoint log</a>
+  <div class="tools">
+    <button onclick="setAll(true)">Expand all</button>
+    <button onclick="setAll(false)">Collapse all</button>
+    <button onclick="window.print()">Print</button>
+  </div>
+</nav>
+
+<main>
+  <!-- Counts. Keep them true to the sections below - a tile that disagrees with its section
+       destroys trust in the whole page. -->
+  <div class="tiles">
+    <div class="tile"><b>{{N_DONE}}</b><span>done &amp; verified</span></div>
+    <div class="tile"><b>{{N_NEXT}}</b><span>next actions</span></div>
+    <div class="tile"><b>{{N_BLOCKED}}</b><span>blockers</span></div>
+    <div class="tile"><b>{{N_BREAKPOINTS}}</b><span>breakpoints</span></div>
+  </div>
+
+  <!-- RULE: every summary carries a one-line PREVIEW stating that section's CONCLUSION,
+       not a description of its contents.
+       RULE: sections 1, 2 and 4 ship open (where it stands / next / blocked). Rest collapsed.
+       RULE: delete a panel entirely if it is genuinely empty. Never fill it with "none". -->
+
+  <details class="panel" id="s1" open>
+    <summary><span class="num">1</span><span class="t">Where it stands</span><span class="preview">{{PREVIEW_1}}</span></summary>
+    <div class="body">
+      <!-- 3-6 sentences. What works, what does not, what a fresh session must know before
+           touching anything. Link the /ultraplan page here if one exists. -->
+      <p>{{WHERE_IT_STANDS}}</p>
+    </div>
+  </details>
+
+  <details class="panel" id="s2" open>
+    <summary><span class="num">2</span><span class="t">Next</span><span class="preview">{{PREVIEW_2}}</span></summary>
+    <div class="body">
+      <!-- one <li> per action, in the order they should happen -->
+      <ul class="next">
+        {{NEXT_ITEMS}}
+      </ul>
+    </div>
+  </details>
+
+  <details class="panel" id="s3">
+    <summary><span class="num">3</span><span class="t">Done</span><span class="preview">{{PREVIEW_3}}</span></summary>
+    <div class="body">
+      <!-- Newest first. Every row names how it was verified: a command, a test, an
+           observation. "not verified" is an acceptable value; a blank cell is not. -->
+      <table>
+        <tr><th>What shipped</th><th>Verified by</th><th>When</th></tr>
+        {{DONE_ROWS}}
+      </table>
+    </div>
+  </details>
+
+  <details class="panel" id="s4" open>
+    <summary><span class="num">4</span><span class="t">Blocked</span><span class="preview">{{PREVIEW_4}}</span></summary>
+    <div class="body">
+      <!-- one .blocker div per blocker: what is stuck, and who or what it waits on -->
+      {{BLOCKERS}}
+    </div>
+  </details>
+
+  <details class="panel" id="s5">
+    <summary><span class="num">5</span><span class="t">Decisions</span><span class="preview">{{PREVIEW_5}}</span></summary>
+    <div class="body">
+      <table>
+        <tr><th>Date</th><th>Decision</th><th>Why it beat the alternative</th></tr>
+        {{DECISION_ROWS}}
+      </table>
+    </div>
+  </details>
+
+  <details class="panel" id="s6">
+    <summary><span class="num">6</span><span class="t">Breakpoint log</span><span class="preview">{{PREVIEW_6}}</span></summary>
+    <div class="body">
+      <!-- Append-only, newest first. One .entry per breakpoint. Never edit a past entry.
+           <div class="entry">
+             <h4>2026-08-06 14:20 - title</h4>
+             <dl><dt>What</dt><dd>...</dd>
+                 <dt>Files</dt><dd><code>...</code></dd>
+                 <dt>Verified</dt><dd>...</dd>
+                 <dt>Next</dt><dd>...</dd></dl>
+           </div> -->
+      {{BREAKPOINT_ENTRIES}}
+    </div>
+  </details>
+
+  <footer>
+    Living snapshot &mdash; the sections above describe the present and are rewritten on every
+    breakpoint; the breakpoint log is append-only history. Source of truth:
+    <code>{{MARKDOWN_PATH}}</code>. Anything in <b>Done</b> without a verification is labeled
+    "not verified" on purpose.
+  </footer>
+</main>
+</div>
+
+<script>
+  function setAll(open) {
+    document.querySelectorAll("details.panel").forEach(d => d.open = open);
+  }
+  window.addEventListener("beforeprint", () => setAll(true));
+  const links = document.querySelectorAll("#toc a");
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.toggle("active", l.getAttribute("href") === "#" + e.target.id));
+      }
+    });
+  }, { rootMargin: "-40% 0px -55% 0px" });
+  document.querySelectorAll("details.panel").forEach(d => obs.observe(d));
+</script>
+</body>
+</html>

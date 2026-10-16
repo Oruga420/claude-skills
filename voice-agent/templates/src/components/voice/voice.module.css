@@ -1,0 +1,293 @@
+/*
+ * Voice call launcher, popover, orb and the full-page confirmation veil.
+ *
+ * Reads every color and shape token from src/app/globals.css (this app's design language):
+ * 2px controls, 4px panels, Spark only on black, no hover movement, 120ms color-only
+ * transitions. Reduced motion is handled two ways: the global stylesheet already collapses
+ * every CSS transition/animation duration to near zero, and Orb.tsx additionally stops its
+ * own requestAnimationFrame polling loop, because a JS-driven canvas/style loop ignores CSS.
+ */
+
+/* --- Launcher ------------------------------------------------------------ */
+
+.launcher {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 900; /* above page content, below Modal's overlay (1000) */
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px 0 14px;
+  background: var(--nav);
+  color: var(--on-nav);
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+
+.launcher:hover {
+  background: #171717;
+}
+
+.launcherDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--spark);
+  flex-shrink: 0;
+}
+
+/* --- Popover --------------------------------------------------------------- */
+
+.popover {
+  position: fixed;
+  right: 20px;
+  bottom: 72px;
+  z-index: 950;
+  width: 380px;
+  max-width: calc(100vw - 40px);
+  max-height: calc(100vh - 112px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.popoverHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 8px 0 16px;
+  min-height: 44px;
+  background: var(--nav);
+  color: var(--on-nav);
+  flex-shrink: 0;
+}
+
+.popoverTitle {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.headActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.iconButton {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid rgb(255 255 255 / 0.45);
+  border-radius: var(--radius-control);
+  color: var(--on-nav);
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.iconButton:hover {
+  background: var(--nav-hover);
+  border-color: var(--on-nav);
+}
+
+.iconButtonActive {
+  background: var(--nav-selected);
+  border-color: var(--on-nav);
+}
+
+.body {
+  padding: 20px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.orbRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.statusText {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.transcript {
+  width: 100%;
+  min-height: 20px;
+  font-size: 13px;
+  color: var(--text);
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+.textRow {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+}
+
+.textInput {
+  flex: 1;
+  height: 32px;
+  padding: 0 10px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  font-size: 13px;
+}
+
+.textInput:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+.configNotice {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+  padding: 8px 0;
+}
+
+.errorNotice {
+  font-size: 13px;
+  color: var(--error);
+  text-align: center;
+  padding: 8px 0;
+}
+
+/* --- Orb -------------------------------------------------------------------- */
+
+.orb {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--mist), var(--spark) 85%);
+  transform: scale(var(--orb-scale, 1));
+  transition: transform 100ms ease-out;
+  flex-shrink: 0;
+}
+
+.orbListening {
+  animation: voice-breathe 2.4s ease-in-out infinite;
+}
+
+.orbStatic {
+  animation: none;
+  transition: none;
+  transform: none;
+}
+
+@keyframes voice-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+/* --- Action overlay ---------------------------------------------------------- */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.panel {
+  width: 420px;
+  max-width: 100%;
+  max-height: calc(100vh - 64px);
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.panelTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--heading);
+}
+
+.lineList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.line {
+  font-size: 14px;
+  color: var(--text);
+  opacity: 0;
+  animation: voice-line-in 240ms ease-out forwards;
+}
+
+@keyframes voice-line-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.countdown {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.doneText {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--success);
+}
+
+.failedText {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--error);
+}
+
+.stopHint {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.panelFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}

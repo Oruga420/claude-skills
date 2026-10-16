@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{LOOP_NAME}} — Contrato del loop</title>
+<!--
+  take-control contract template.
+  Fill EVERY {{PLACEHOLDER}}. Placeholders whose name is plural (…_ROWS, …_ITEMS)
+  expect repeated HTML fragments; the comment above each says the exact shape.
+  Do not restyle: the point is that this page and the ultraplan page look like family.
+-->
+<style>
+  :root {
+    --bg: #f6f7f9; --panel: #ffffff; --ink: #1a2233; --muted: #5c6675;
+    --line: #dde1e7; --accent: #0e8a91; --accent-soft: #e2f4f5;
+    --ok: #1d7a3e; --warn: #b26a00; --bad: #b3261e;
+    --ok-bg: #e5f3ea; --warn-bg: #fdf1dd; --bad-bg: #fbe7e6; --code-bg: #f0f2f5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14171c; --panel: #1d2129; --ink: #e6e9ee; --muted: #9aa3b0;
+      --line: #313743; --accent: #39d0d8; --accent-soft: #163032;
+      --ok: #6fce93; --warn: #e6b566; --bad: #ef8f89;
+      --ok-bg: #1c2f23; --warn-bg: #332a1a; --bad-bg: #38201e; --code-bg: #161a20;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.6 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  header { background: var(--panel); border-bottom: 1px solid var(--line);
+    padding: 22px 28px; position: sticky; top: 0; z-index: 10; }
+  header h1 { margin: 0 0 6px; font-size: 22px; }
+  .meta { color: var(--muted); font-size: 13px; }
+  .badge { display: inline-block; padding: 3px 12px; border-radius: 99px;
+    font-size: 13px; font-weight: 600; background: var(--accent-soft); color: var(--accent); }
+  .badge.pass { background: var(--ok-bg); color: var(--ok); }
+  .badge.hold { background: var(--warn-bg); color: var(--warn); }
+  .wrap { max-width: 1080px; margin: 26px auto; padding: 0 24px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px; margin-bottom: 22px; }
+  .tile { background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px 16px; }
+  .tile b { display: block; font-size: 26px; line-height: 1.2; }
+  .tile span { color: var(--muted); font-size: 12.5px; text-transform: uppercase; letter-spacing: 1px; }
+  section { background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    padding: 20px 24px; margin-bottom: 20px; }
+  section > h2 { margin: 0 0 14px; font-size: 17px; letter-spacing: .2px; }
+  section > h2 small { color: var(--muted); font-weight: 400; font-size: 13px; margin-left: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-size: 12.5px; text-transform: uppercase; letter-spacing: .6px; }
+  tr:last-child td { border-bottom: none; }
+  code, .mono { font-family: "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+    font-size: 13px; background: var(--code-bg); padding: 2px 6px; border-radius: 5px; }
+  td.cmd code { display: inline-block; white-space: pre-wrap; word-break: break-word; }
+  .v { display: inline-block; padding: 2px 10px; border-radius: 99px; font-size: 12px;
+    font-weight: 700; letter-spacing: .5px; }
+  .v-SURVIVED { background: var(--ok-bg); color: var(--ok); }
+  .v-KILLED { background: var(--bad-bg); color: var(--bad); }
+  .v-FIXED { background: var(--warn-bg); color: var(--warn); }
+  .v-UNVERIFIABLE { background: var(--accent-soft); color: var(--accent); }
+  ol, ul { margin: 0; padding-left: 22px; }
+  li { margin-bottom: 8px; }
+  .never { border-left: 3px solid var(--bad); padding-left: 14px; color: var(--ink); }
+  .links a { color: var(--accent); }
+  footer { color: var(--muted); font-size: 12.5px; text-align: center; padding: 30px 0 40px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>{{LOOP_NAME}} — contrato del loop</h1>
+  <div class="meta">
+    {{PROJECT}} · {{DATE}} ·
+    <!-- GATE_BADGE: <span class="badge pass">aprobado 9.4/10</span> o <span class="badge hold">en revision 7.5/10</span> -->
+    {{GATE_BADGE}}
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="tiles">
+    <div class="tile"><b>{{SCORE}}</b><span>calificacion</span></div>
+    <div class="tile"><b>{{ROUNDS}}</b><span>rondas de revision</span></div>
+    <div class="tile"><b>{{N_CRITERIA}}</b><span>criterios falsables</span></div>
+    <div class="tile"><b>{{N_KILLED}}</b><span>claims muertos</span></div>
+  </div>
+
+  <section>
+    <h2>Goal <small>que es ganar, y si hay linea de meta</small></h2>
+    {{GOAL}}
+  </section>
+
+  <section>
+    <h2>Boundaries <small>que hace solo, que escala al operador</small></h2>
+    {{BOUNDARIES}}
+    <!-- NEVER_RULES: uno o mas <p class="never">Nunca …</p>. Al menos una regla via-negativa. -->
+    {{NEVER_RULES}}
+  </section>
+
+  <section>
+    <h2>SOP <small>el workflow numerado de cada corrida</small></h2>
+    <!-- SOP_STEPS: <li>…</li> por paso; el ultimo escribe State + Logs. -->
+    <ol>{{SOP_STEPS}}</ol>
+  </section>
+
+  <section>
+    <h2>Criterios de aceptacion <small>comando + salida exacta que cuenta como verde</small></h2>
+    <table>
+      <thead><tr><th style="width:44%">Se corre</th><th>Verde si</th></tr></thead>
+      <!-- ACCEPTANCE_ROWS: <tr><td class="cmd"><code>comando</code></td><td>salida exacta</td></tr> -->
+      <tbody>{{ACCEPTANCE_ROWS}}</tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Veredictos de judge-charly <small>y que cambio el plan por ellos</small></h2>
+    <table>
+      <thead><tr><th style="width:62%">Claim</th><th>Veredicto</th></tr></thead>
+      <!-- VERDICT_ROWS: <tr><td>claim</td><td><span class="v v-KILLED">KILLED</span></td></tr> -->
+      <tbody>{{VERDICT_ROWS}}</tbody>
+    </table>
+    <h2 style="margin-top:22px">Que cambio</h2>
+    <!-- CHANGES_ITEMS: <li>…</li>. Si esta vacio, el gate no se paso: judge-charly fue decorativo. -->
+    <ul>{{CHANGES_ITEMS}}</ul>
+  </section>
+
+  <section>
+    <h2>Trigger y estado</h2>
+    <p><b>Trigger:</b> {{TRIGGER}}</p>
+    {{STATE}}
+  </section>
+
+  <section>
+    <h2>Fuera de alcance <small>lo que este loop NO hace</small></h2>
+    <!-- NOT_SCOPE_ITEMS: <li>…</li> -->
+    <ul>{{NOT_SCOPE_ITEMS}}</ul>
+  </section>
+
+  <section class="links">
+    <h2>Artefactos</h2>
+    <ul>
+      <li>Ultraplan: <a href="{{ULTRAPLAN_HREF}}">{{ULTRAPLAN_HREF}}</a></li>
+      <li>Contrato vivo: <code>{{CONTRACT_PATH}}</code></li>
+      <li>Video: <code>{{VIDEO_PATH}}</code></li>
+    </ul>
+  </section>
+
+</div>
+<footer>take-control · contrato generado desde el ultraplan y fusilado por judge-charly</footer>
+</body>
+</html>

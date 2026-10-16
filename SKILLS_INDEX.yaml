@@ -21,7 +21,7 @@
 
 meta:
   version: 1
-  total_skills: 98
+  total_skills: 108
   maintainer: Oruga420
   read_before_use: true
   tip: >
@@ -1090,3 +1090,67 @@ skills:
     triggers: ["install Astra in Claude Code", "Astra gateway", "resumed session model unavailable"]
     use_when: Installing Astra through Model Gateway or diagnosing routing for a selected working root.
     avoid_when: Configuring LAN access or changing organization policies.
+
+  # ---------------------------------------------------------------------------
+  # WORKFLOWS WITH YOUR OWN KEYS / HARDWARE
+  # ---------------------------------------------------------------------------
+  - name: agent-dream
+    folder: agent-dream/
+    activation: /agent-dream
+    category: workflows
+    use_when: "Gated curation loop for self-evolving agents"
+
+  - name: diagramas-de-sistemas
+    folder: diagramas-de-sistemas/
+    activation: /diagramas-de-sistemas
+    category: workflows
+    use_when: "Crear diagramas e informes de arquitectura de sistemas con la profundidad del ejemplo de referencia incluido: componentes, productos, servidores, flujos de requests y datos, runtime/LLM, cadencias, wo"
+
+  - name: judge-charly
+    folder: judge-charly/
+    activation: /judge-charly
+    category: workflows
+    use_when: "Pelotón de fusilamiento adversarial para teorías, diagnósticos y drafts"
+
+  - name: point-by-point
+    folder: point-by-point/
+    activation: /point-by-point
+    category: workflows
+    use_when: "The 5-line rule"
+
+  - name: projectstatus
+    folder: projectstatus/
+    activation: /projectstatus
+    category: workflows
+    use_when: "Living per-project status snapshot, updated at every breakpoint"
+
+  - name: search-skills
+    folder: search-skills/
+    activation: /search-skills
+    category: workflows
+    use_when: "Busca skills relevantes en tu clon local del repo publico de skills (github.com/Oruga420/claude-skills, ruta en `SKILLS_REPO`, por defecto `~/claude-skills`) usando palabras clave o una descripcion de"
+
+  - name: take-control-full
+    folder: take-control-full/
+    activation: /take-control-full
+    category: workflows
+    use_when: "La version que ademas construye"
+
+  - name: take-controlish
+    folder: take-controlish/
+    activation: /take-controlish
+    category: workflows
+    use_when: "Toma una tarea y la lleva sola hasta un contrato de loop aprobado, sin ejecutarla"
+
+  - name: talk-to-me
+    folder: talk-to-me/
+    activation: /talk-to-me
+    category: workflows
+    use_when: "Camera-gated voice notifications for any Claude Code session"
+
+  - name: voice-agent
+    folder: voice-agent/
+    activation: /voice-agent
+    category: workflows
+    use_when: "Implementation guide plus bundled toolkit for giving any web app a 'Call the agent' voice orb (ElevenLabs Agents) that drives the app's own UI through WebMCP page tools, with a mandatory clickables in"
+

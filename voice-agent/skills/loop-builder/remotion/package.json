@@ -1,0 +1,24 @@
+{
+  "name": "loop-builder-diagrams",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Remotion recreations of the loop-engineering diagrams as animated data-flow videos",
+  "scripts": {
+    "studio": "remotion studio",
+    "render:anatomy": "remotion render src/index.ts LoopAnatomy ../assets/videos/01-loop-anatomy.mp4",
+    "render:triggers": "remotion render src/index.ts TriggerTypes ../assets/videos/02-trigger-types.mp4",
+    "render:evolve": "remotion render src/index.ts EvolveLoop ../assets/videos/03-evolve-loop.mp4",
+    "render:docmaintainer": "remotion render src/index.ts DocMaintainer ../assets/videos/04-doc-maintainer-loop.mp4",
+    "render:all": "npm run render:anatomy && npm run render:triggers && npm run render:evolve && npm run render:docmaintainer"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.246",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.246"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.12",
+    "typescript": "5.6.3"
+  }
+}

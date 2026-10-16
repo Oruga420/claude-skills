@@ -221,6 +221,23 @@ Persistent, compounding knowledge bases powered by LLMs. Inspired by [Karpathy's
 
 ---
 
+### Workflows that need your own keys or hardware
+
+Each one lists what to bring (API keys, voice id, webcam, CLIs) in its Requirements section; copy `.env.example` to `.env` where there is one.
+
+| Skill | Description |
+|-------|-------------|
+| [agent-dream](./agent-dream/) | Gated curation loop for self-evolving agents |
+| [diagramas-de-sistemas](./diagramas-de-sistemas/) | Crear diagramas e informes de arquitectura de sistemas con la profundidad del ejemplo de referencia incluido: componentes, productos, servidores, flujos de requests y datos, runtime/LLM, cadencias, wo |
+| [judge-charly](./judge-charly/) | Pelotón de fusilamiento adversarial para teorías, diagnósticos y drafts |
+| [point-by-point](./point-by-point/) | The 5-line rule |
+| [projectstatus](./projectstatus/) | Living per-project status snapshot, updated at every breakpoint |
+| [search-skills](./search-skills/) | Busca skills relevantes en tu clon local del repo publico de skills (github.com/Oruga420/claude-skills, ruta en `SKILLS_REPO`, por defecto `~/claude-skills`) usando palabras clave o una descripcion de |
+| [take-control-full](./take-control-full/) | La version que ademas construye |
+| [take-controlish](./take-controlish/) | Toma una tarea y la lleva sola hasta un contrato de loop aprobado, sin ejecutarla |
+| [talk-to-me](./talk-to-me/) | Camera-gated voice notifications for any Claude Code session |
+| [voice-agent](./voice-agent/) | Implementation guide plus bundled toolkit for giving any web app a "Call the agent" voice orb (ElevenLabs Agents) that drives the app's own UI through WebMCP page tools, with a mandatory clickables in |
+
 ## Commands
 
 Slash commands live in [`commands/`](./commands/). Copy them to `~/.claude/commands/` to use.

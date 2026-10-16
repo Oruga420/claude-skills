@@ -29,4 +29,3 @@ appbuilder/PROFILE.local.md
 # never re-import
 node_modules/
 package-lock.json
-judge-charly/

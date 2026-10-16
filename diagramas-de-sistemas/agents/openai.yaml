@@ -1,0 +1,6 @@
+interface:
+  display_name: "Diagramas de sistemas"
+  short_description: "Arquitectura, flujos, runtime y datos en HTML"
+  default_prompt: "Usa $diagramas-de-sistemas para explicar este sistema en un HTML interactivo con componentes, servidores, flujos, runtime, datos, workarounds y evidencias."
+policy:
+  allow_implicit_invocation: true
