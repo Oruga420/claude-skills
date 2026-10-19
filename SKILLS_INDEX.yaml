@@ -21,7 +21,7 @@
 
 meta:
   version: 1
-  total_skills: 108
+  total_skills: 105
   maintainer: Oruga420
   read_before_use: true
   tip: >
@@ -840,24 +840,6 @@ skills:
     examples:
       - "Gcloud says my token expired" -> refresh-google-tokens
 
-  - name: conectaesamamada
-    folder: conectaesamamada/
-    activation: null
-    category: integrations
-    triggers: ["connect to GCP", "gcp login", "gcp setup"]
-    use_when: Connecting to GCP without fumbling — exact steps in order.
-    examples:
-      - "Log me into GCP cleanly" -> conectaesamamada
-
-  - name: onboard
-    folder: onboard/
-    activation: null
-    category: integrations
-    triggers: ["onboard employee", "new hire", "provision Google account", "Slack SCIM"]
-    use_when: Onboarding a new employee at your company (Google + Slack + welcome email).
-    examples:
-      - "Onboard new hire Maria" -> onboard
-
   - name: visa-doc-translate
     folder: visa-doc-translate/
     activation: null
@@ -903,33 +885,6 @@ skills:
     use_when: Processing/OCR/redact/sign/fill documents via Nutrient DWS API.
     examples:
       - "OCR this scanned PDF and redact SSNs" -> nutrient-document-processing
-
-  - name: Jira-loop
-    folder: Jira-loop/
-    activation: /Jira-loop
-    category: integrations
-    triggers:
-      - "watch this Jira ticket"
-      - "keep an eye on PROJ-123"
-      - "monitor my Jira"
-      - "babysit ticket"
-      - "check the ticket status and comments"
-      - "vigila este ticket"
-      - "revisa el ticket cada X minutos"
-    use_when: >
-      Watching one or more Jira tickets on a recurring loop via the Atlassian
-      CLI (acli). Each pass reads status + comments, detects changes since the
-      last pass, researches the open question, and writes a per-ticket Markdown
-      answer file (title = ticket + question, body = question + proposed answer,
-      plus a code-change implementation plan when one is needed). Read-only on
-      Jira; output is local Markdown the operator reviews and sends.
-    avoid_when: >
-      Posting a reply directly to Jira, or applying code changes — this skill
-      only reads Jira and writes a proposed answer + plan to a local file.
-    examples:
-      - "/Jira-loop PROJ-42 PROJ-43" -> Jira-loop
-      - "keep an eye on these two tickets every 5 min" -> Jira-loop
-      - "vigila PROJ-42 y PROJ-43 cada 5 minutos" -> Jira-loop
 
   - name: st3gg
     folder: st3gg/

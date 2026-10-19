@@ -205,7 +205,6 @@ Persistent, compounding knowledge bases powered by LLMs. Inspired by [Karpathy's
 
 | Skill | Description |
 |-------|-------------|
-| [conectaesamamada](./conectaesamamada/) | Connect to GCP — step-by-step, no fumbling |
 | [gws-installer](./gws-installer/) | Interactive installer for Google Workspace CLI (`gws`) — installation, OAuth setup, and authentication |
 | [refresh-google-tokens](./refresh-google-tokens/) | Refresh both Google Cloud CLI auth and ADC in one step. Fixes expired token errors |
 
@@ -214,10 +213,8 @@ Persistent, compounding knowledge bases powered by LLMs. Inspired by [Karpathy's
 | Skill | Description |
 |-------|-------------|
 | [nutrient-document-processing](./nutrient-document-processing/) | Process, convert, OCR, extract, redact, sign, and fill documents using the Nutrient DWS API |
-| [onboard](./onboard/) | Onboard a new employee — Google Workspace account, Slack provisioning, and welcome email |
 | [sm-post](./sm-post/) | Publish to Twitter/X, LinkedIn, Facebook, Instagram, TikTok, YouTube, Threads, Bluesky, Pinterest, Reddit, Telegram, and Google Business via the Ayrshare API. Accepts inline text, a file path, or inferred content from the conversation |
 | [visa-doc-translate](./visa-doc-translate/) | Translate visa application documents to English and create a bilingual PDF |
-| [Jira-loop](./Jira-loop/) | Watch one or more Jira tickets on a recurring loop via the Atlassian CLI — detects status/comment changes, researches the open question, and writes a per-ticket Markdown answer file with a proposed answer and implementation plan |
 
 ---
 
@@ -309,7 +306,6 @@ Slash commands live in [`commands/`](./commands/). Copy them to `~/.claude/comma
 | `/sessions` | Session management |
 | `/harness-audit` | Audit harness configuration |
 | `/hubspot-scan` | HubSpot on-demand activity feed |
-| `/onboard` | Onboard a new employee |
 | `/pm2` | Initialize PM2 |
 | `/setup-pm` | Configure your preferred package manager |
 | `/skill-create` | Analyze git history to extract coding patterns and generate SKILL.md files |

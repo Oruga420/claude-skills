@@ -153,7 +153,6 @@ The shed contains **77 skills** organized by category. Below is the full index w
 ### GCP & Google Workspace
 | Skill | Description |
 |-------|-------------|
-| conectaesamamada | Step-by-step GCP connection |
 | gws-installer | Google Workspace CLI setup |
 | refresh-google-tokens | Refresh gcloud + ADC tokens |
 
@@ -161,7 +160,6 @@ The shed contains **77 skills** organized by category. Below is the full index w
 | Skill | Description |
 |-------|-------------|
 | nutrient-document-processing | PDF/DOCX processing via Nutrient API |
-| onboard | Employee onboarding workflow |
 | visa-doc-translate | Bilingual visa document translation |
 
 ## Workflow

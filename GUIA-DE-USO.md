@@ -181,7 +181,6 @@ tools: Read, Write, Edit, Bash # Herramientas requeridas
 - `deployment-patterns` - CI/CD y deployment
 - `strategic-compact` - Compactacion de contexto
 - `session-insights` - Analisis de sesiones
-- `onboard` - Onboarding de empleados
 
 ---
 

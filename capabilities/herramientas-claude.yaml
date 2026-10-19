@@ -163,17 +163,6 @@ skills:
       - "Se decide entre regex y LLM"
     requiere_confirmacion: true
 
-  onboard:
-    nombre: "Employee Onboarding"
-    categoria: "Operations"
-    capabilities:
-      - Crear cuenta Google Workspace
-      - Provisionar Slack via SCIM
-      - Enviar welcome email
-    activar_cuando:
-      - "Se hace onboarding de empleado"
-    requiere_confirmacion: true
-
   visa-doc-translate:
     nombre: "Visa Document Translate"
     categoria: "Operations"
