@@ -1,0 +1,74 @@
+{
+  "name": "Hallmark - Oruga adaptation",
+  "version": "2.0.0-oruga.1",
+  "upstream": {
+    "repository": "https://github.com/Nutlope/hallmark",
+    "commit": "4f6a46c6dc325d40ab268c93e25c7b96676ebccd",
+    "directory": "skills/hallmark",
+    "version": "2.0.0",
+    "license": "MIT"
+  },
+  "modifications": "Design workflow, media handoff, script policies, offline verification and metadata adapted for Oruga420. Upstream MIT attribution retained in LICENSE.",
+  "script_audit": [
+    {
+      "file": "capture.mjs",
+      "upstream_sha256": "17c36f7400c2633ac37d87b236894385f6e72c3026ab916deed27b5e17e1cc2a",
+      "decision": "rewritten: explicit bounded capture using the shared reviewed browser helper"
+    },
+    {
+      "file": "imagegen.mjs",
+      "upstream_sha256": "0e9e2dde64a0b1a7d45085b3d9ec51f49f2927e544400bfa33207fb2c9b579cc",
+      "decision": "replaced by offline provider-neutral media-plan.mjs; agent performs authorized runtime provider calls"
+    },
+    {
+      "file": "install-hook.mjs",
+      "upstream_sha256": "f0ce8b6e834652bcc560438952701ef467f4b29ee5d577e917632cb7d92ddc76",
+      "decision": "removed: no automatic hooks or settings changes"
+    },
+    {
+      "file": "install.mjs",
+      "upstream_sha256": "f4d6959d35f5e01efb94f2f88b43f10e8d296e9bd2ff06e5c002c7f87aeeb488",
+      "decision": "removed: replacement/deletion of install targets and incidental execution; deployment uses explicit copies"
+    },
+    {
+      "file": "lint-hook.mjs",
+      "upstream_sha256": "04fd40ab9dfaffb049da6b8b69811e306a5dee8c9acfc4d6817987d8a4671738",
+      "decision": "removed: no implicit execution on edits"
+    },
+    {
+      "file": "photos.json",
+      "upstream_sha256": "1ee6836583e8048400876351c0605bc3f08515fecfe68aca3712b9e75498bc65",
+      "decision": "removed: static stock catalogue and download path; prefer supplied assets, provenance and approved providers"
+    },
+    {
+      "file": "picture.mjs",
+      "upstream_sha256": "21db01db66d393d58d2dd799e7614a6033d1a56891d9d9d8cae0c42ed42592c1",
+      "decision": "removed: overwrites upstream catalogue images and theme documents; not a design-task helper"
+    },
+    {
+      "file": "refcheck.mjs",
+      "upstream_sha256": "1ef973e33a21411505349779dfc37e417d39418d8e566cf197585b5c2b0d7e16",
+      "decision": "rewritten: package links, theme paths and SHA256 integrity; no subprocesses or fixture execution"
+    },
+    {
+      "file": "sloplint-render.mjs",
+      "upstream_sha256": "3af79afa100a9804f248ade24d5128cea4fde1ef6d1a279f1dd935bfe6dc41cd",
+      "decision": "adapted: retain responsive measurements, keyboard focus and screenshots; explicit browser fallback, no npm discovery"
+    },
+    {
+      "file": "sloplint.mjs",
+      "upstream_sha256": "530b8d5a5ad0bb19b3e06a74600523bef3f3397de47e43de045e7862d73ca11e",
+      "decision": "adapted: retain parser and a11y/contrast/state checks; scoped Oruga rules and honest incomplete status"
+    },
+    {
+      "file": "theme.mjs",
+      "upstream_sha256": "246f8773c5772986c1f382a8c60e7e2194df4b8c04851f59fd4ff216accd158f",
+      "decision": "rewritten: deterministic shortlist, explicit safe token export; no random layout, downloads or overwrites"
+    },
+    {
+      "file": "theme.test.mjs",
+      "upstream_sha256": "ce427fdd47290584c6707ff2a14db978db8a40c3fbd9f8fb19cc34bb823d1edc",
+      "decision": "replaced by offline regression tests for the adapted contract"
+    }
+  ]
+}

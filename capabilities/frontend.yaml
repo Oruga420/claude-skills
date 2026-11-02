@@ -42,3 +42,16 @@ skills:
       - "Se crea una presentacion web"
       - "Se convierte PPT/PPTX a HTML"
     requiere_confirmacion: true
+
+  hallmark:
+    nombre: "Hallmark - Oruga adaptation"
+    categoria: "Frontend"
+    capabilities:
+      - Diseno de interfaces con branding, color, tipografia y espaciado intencionales
+      - Microinteracciones, motion, responsive y accesibilidad
+      - Auditoria visual con capturas inspeccionadas y pruebas de interaccion reales
+      - Handoff de medios a Higgsfield o Replicate con capacidades descubiertas en runtime
+    activar_cuando:
+      - "El usuario pide Hallmark o una interfaz nueva con direccion visual propia"
+      - "El usuario autoriza una auditoria o rediseno de una interfaz concreta"
+    requiere_confirmacion: true

@@ -21,7 +21,7 @@
 
 meta:
   version: 1
-  total_skills: 105
+  total_skills: 106
   maintainer: Oruga420
   read_before_use: true
   tip: >
@@ -534,6 +534,17 @@ skills:
     use_when: Generating UI that should match a specific brand's design language (Vercel, Stripe, Linear, etc.).
     examples:
       - "Build a landing page in the style of Linear" -> awesome-design-md
+
+  - name: hallmark
+    folder: hallmark/
+    activation: /hallmark
+    category: frontend
+    triggers: ["hallmark", "distinctive UI design", "branded interface", "intentional motion", "visual UI audit"]
+    use_when: Building polished new interfaces or explicitly auditing/redesigning a named UI with responsive, accessible interactions and verified visual results.
+    avoid_when: Unrequested redesign of an existing delivered artifact; prompt-only requests must return the complete prompt without media generation.
+    examples:
+      - "Use Hallmark to design a branded product page with meaningful motion"
+      - "/hallmark audit the checkout screen"
 
   - name: huashu-design
     folder: huashu-design/

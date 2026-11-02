@@ -125,6 +125,7 @@ Persistent, compounding knowledge bases powered by LLMs. Inspired by [Karpathy's
 | [coding-standards](./coding-standards/) | Universal coding standards, best practices, and patterns for TypeScript, JavaScript, React, and Node.js development |
 | [frontend-patterns](./frontend-patterns/) | Frontend development patterns for React, Next.js, state management, performance optimization, and UI best practices |
 | [frontend-slides](./frontend-slides/) | Create animation-rich HTML presentations from scratch or by converting PowerPoint files |
+| [hallmark](./hallmark/) | Oruga-adapted Hallmark: distinctive branded UI, intentional motion, responsive/accessibility checks and real visual QA. Higgsfield/Replicate media handoff with runtime model discovery; no automatic hooks or paid calls. |
 | [huashu-design](./huashu-design/) | Hi-fi HTML prototyping, interactive demos, slides, animations, design-variant exploration, design-direction advisor, and expert 5-dimension design review. Includes anti-AI-slop checklist, starter components, Playwright verification, and HTML-animation → MP4/GIF export |
 
 ### Swift & iOS

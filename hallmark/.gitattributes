@@ -1,0 +1,2 @@
+# Preserve package bytes so its SHA256 manifest is portable across operating systems.
+* -text
