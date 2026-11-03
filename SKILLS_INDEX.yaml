@@ -21,7 +21,7 @@
 
 meta:
   version: 1
-  total_skills: 106
+  total_skills: 107
   maintainer: Oruga420
   read_before_use: true
   tip: >
@@ -981,6 +981,17 @@ skills:
       - "Turn this short story into an animated scene" -> seedance-animator
       - "Make an anime clip of my character sailing at dawn" -> seedance-animator
       - "Generate a podcast from my notebook" -> notebook-research
+
+  - name: sesh-3d-print
+    folder: sesh-3d-print/
+    activation: /sesh-3d-print
+    category: integrations
+    triggers: ["sesh-3d-print", "figura para imprimir en 3D", "reparar STL", "pieza para Bambu Lab", "Blender para impresión", "tolerancias y soportes", "3MF y AMS"]
+    use_when: Modelar o modificar figuras y piezas funcionales con Blender local, medir/reparar mallas y preparar STL o proyectos 3MF para revisión en Bambu Studio u OrcaSlicer.
+    avoid_when: Control de impresora, servicios de generación de pago, compras o instalación de aplicaciones.
+    examples:
+      - "Usa sesh-3d-print para reparar este STL conservando sus agujeros"
+      - "Crea una figura con Blender y prepara el modelo para mi Bambu"
 
   - name: oruga-blender
     folder: oruga-blender/

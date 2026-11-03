@@ -2,6 +2,19 @@
 # Agregar a CLAUDE.md para que Claude active estos skills segun necesidad
 
 skills:
+  sesh-3d-print:
+    nombre: "Sesh 3D Print"
+    categoria: "Modelado e impresión 3D local"
+    capabilities:
+      - Crear y modificar figuras orgánicas y piezas funcionales con Blender local
+      - Inspeccionar STL sin alterar originales y exportar mallas evaluadas en mm
+      - Guiar reparaciones selectivas, tolerancias, paredes, orientación y soportes
+      - Preparar proyectos 3MF y color AMS en el slicer instalado
+    activar_cuando:
+      - "El usuario pide sesh-3d-print o preparación de modelos para impresión FDM"
+      - "Se necesita editar una figura o pieza y revisar su fabricación en Bambu Studio"
+    requiere_confirmacion: true
+
   astra-gateway:
     nombre: "Astra Gateway"
     categoria: "Claude Tooling"

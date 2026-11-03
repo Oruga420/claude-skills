@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sesh 3D Print"
+  short_description: "Modela, repara y prepara piezas 3D con Blender"
+  default_prompt: "Usa $sesh-3d-print para crear o modificar mi modelo y preparar una exportación medida para revisar en el slicer."
